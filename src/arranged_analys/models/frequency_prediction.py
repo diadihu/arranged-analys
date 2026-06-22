@@ -5,7 +5,7 @@ from dataclasses import asdict, dataclass
 from itertools import product
 from typing import Iterable
 
-from arranged_analys.data.jslottery import DrawRecord, LOTTERY_CONFIG
+from arranged_analys.data.sporttery import DrawRecord, LOTTERY_CONFIG
 
 
 @dataclass(slots=True)

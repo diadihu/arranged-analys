@@ -1,8 +1,10 @@
 {
-  "updated_at": "2026-06-22T07:50:47Z",
+  "updated_at": "2026-06-22T08:19:22Z",
   "data_source": {
-    "name": "江苏体彩网排列3/排列5历史数据页面",
-    "base_url": "https://www.js-lottery.com/wfzq/p3p5/p3data"
+    "name": "中国体彩网官方 JSON 接口",
+    "history_api": "https://webapi.sporttery.cn/gateway/lottery/getHistoryPageListV1.qry",
+    "latest_api": "https://webapi.sporttery.cn/gateway/lottery/getDigitalDrawInfoV1.qry",
+    "official_page": "https://m.lottery.gov.cn/mkjpls/"
   },
   "lotteries": {
     "p3": {

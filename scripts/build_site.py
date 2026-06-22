@@ -10,7 +10,7 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from arranged_analys.data.jslottery import fetch_history, updated_at_iso, write_history_csv
+from arranged_analys.data.sporttery import fetch_history, read_history_csv, updated_at_iso, write_history_csv
 from arranged_analys.models.frequency_prediction import build_frequency_prediction
 
 DATA_RAW_DIR = ROOT / "data" / "raw"
@@ -29,10 +29,12 @@ def build_site_data() -> None:
     summary_lotteries: dict[str, object] = {}
 
     for lottery_type in ("p3", "p5"):
-        records = fetch_history(lottery_type)
-        prediction = build_frequency_prediction(records, lottery_type=lottery_type)
-
         csv_path = DATA_RAW_DIR / f"{lottery_type}_history.csv"
+        existing_records = read_history_csv(csv_path)
+        records = fetch_history(lottery_type, existing_records=existing_records)
+        prediction = build_frequency_prediction(records, lottery_type=lottery_type)
+        latest = records[-1]
+
         write_history_csv(records, csv_path)
 
         history_payload = {
@@ -42,7 +44,6 @@ def build_site_data() -> None:
         }
         write_json(DOCS_DATA_DIR / f"{lottery_type}-history.json", history_payload)
 
-        latest = records[-1]
         summary_lotteries[lottery_type] = {
             "display_name": latest.display_name,
             "records_count": len(records),
@@ -55,8 +56,10 @@ def build_site_data() -> None:
     summary_payload = {
         "updated_at": updated_at,
         "data_source": {
-            "name": "江苏体彩网排列3/排列5历史数据页面",
-            "base_url": "https://www.js-lottery.com/wfzq/p3p5/p3data",
+            "name": "中国体彩网官方 JSON 接口",
+            "history_api": "https://webapi.sporttery.cn/gateway/lottery/getHistoryPageListV1.qry",
+            "latest_api": "https://webapi.sporttery.cn/gateway/lottery/getDigitalDrawInfoV1.qry",
+            "official_page": "https://m.lottery.gov.cn/mkjpls/",
         },
         "lotteries": summary_lotteries,
     }

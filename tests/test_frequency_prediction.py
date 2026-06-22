@@ -1,4 +1,4 @@
-from arranged_analys.data.jslottery import DrawRecord
+from arranged_analys.data.sporttery import DrawRecord
 from arranged_analys.models.frequency_prediction import build_frequency_prediction
 
 
