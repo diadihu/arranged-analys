@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>体彩排列分析看板</title>
+  <meta name="description" content="体彩排列三与排列五历史数据、最新开奖和简单预测框架展示。">
+  <link rel="stylesheet" href="./assets/styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <p class="eyebrow">体彩数据实验站</p>
+      <h1>排列三 / 排列五 历史数据与简单预测</h1>
+      <p class="hero-copy">
+        站点通过 Python 定时抓取历史开奖数据，生成静态 JSON，并在 GitHub Pages 上展示最新历史记录与一个可解释的基线预测结果。
+      </p>
+      <div class="hero-meta">
+        <div>
+          <span class="meta-label">数据来源</span>
+          <span id="data-source-name">加载中</span>
+        </div>
+        <div>
+          <span class="meta-label">最近更新</span>
+          <span id="updated-at">加载中</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="content-grid">
+      <section class="panel panel-tabs">
+        <div class="tab-bar">
+          <button class="tab-button active" data-type="p3">排列三</button>
+          <button class="tab-button" data-type="p5">排列五</button>
+        </div>
+        <div class="card-grid">
+          <article class="stat-card">
+            <span class="stat-label">最新期号</span>
+            <strong id="latest-issue">-</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">最新开奖号码</span>
+            <strong id="latest-number">-</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">历史记录数</span>
+            <strong id="records-count">-</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">基线主推荐</span>
+            <strong id="primary-prediction">-</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <div>
+            <h2>位频候选</h2>
+            <p>基于最近窗口数据统计各位置出现频次，取最高频数字作为主推荐。</p>
+          </div>
+          <span id="window-size-chip" class="chip">窗口 -</span>
+        </div>
+        <div id="position-candidates" class="candidate-columns"></div>
+        <p id="prediction-disclaimer" class="disclaimer"></p>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <div>
+            <h2>推荐组合</h2>
+            <p>从每一位的高频候选组合出一组实验性号码，分数越高代表近期位频乘积越大。</p>
+          </div>
+        </div>
+        <div id="recommended-combinations" class="combination-list"></div>
+      </section>
+
+      <section class="panel panel-history">
+        <div class="section-head history-head">
+          <div>
+            <h2>历史开奖</h2>
+            <p>支持按期号或日期快速筛选，默认每页展示 20 条。</p>
+          </div>
+          <label class="search-box">
+            <span>搜索</span>
+            <input id="history-search" type="search" placeholder="输入期号或日期">
+          </label>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>日期</th>
+                <th>期号</th>
+                <th>号码</th>
+                <th>详情</th>
+              </tr>
+            </thead>
+            <tbody id="history-table-body"></tbody>
+          </table>
+        </div>
+        <div class="pager">
+          <button id="prev-page" class="pager-button">上一页</button>
+          <span id="page-indicator">1 / 1</span>
+          <button id="next-page" class="pager-button">下一页</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="./assets/app.js"></script>
+</body>
+</html>

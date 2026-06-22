@@ -1,0 +1,244 @@
+{
+  "p3": {
+    "lottery_type": "p3",
+    "display_name": "排列三",
+    "window_size": 120,
+    "latest_issue": "26162",
+    "latest_number": "369",
+    "primary_prediction": "945",
+    "positional_candidates": [
+      [
+        {
+          "digit": 9,
+          "count": 16,
+          "ratio": 0.1333
+        },
+        {
+          "digit": 4,
+          "count": 15,
+          "ratio": 0.125
+        },
+        {
+          "digit": 0,
+          "count": 14,
+          "ratio": 0.1167
+        }
+      ],
+      [
+        {
+          "digit": 4,
+          "count": 18,
+          "ratio": 0.15
+        },
+        {
+          "digit": 1,
+          "count": 14,
+          "ratio": 0.1167
+        },
+        {
+          "digit": 5,
+          "count": 14,
+          "ratio": 0.1167
+        }
+      ],
+      [
+        {
+          "digit": 5,
+          "count": 16,
+          "ratio": 0.1333
+        },
+        {
+          "digit": 0,
+          "count": 15,
+          "ratio": 0.125
+        },
+        {
+          "digit": 3,
+          "count": 14,
+          "ratio": 0.1167
+        }
+      ]
+    ],
+    "recommended_combinations": [
+      {
+        "number": "945",
+        "score": 0.002665
+      },
+      {
+        "number": "445",
+        "score": 0.002499
+      },
+      {
+        "number": "940",
+        "score": 0.002499
+      },
+      {
+        "number": "440",
+        "score": 0.002344
+      },
+      {
+        "number": "045",
+        "score": 0.002333
+      },
+      {
+        "number": "943",
+        "score": 0.002333
+      },
+      {
+        "number": "040",
+        "score": 0.002188
+      },
+      {
+        "number": "443",
+        "score": 0.002188
+      },
+      {
+        "number": "915",
+        "score": 0.002074
+      },
+      {
+        "number": "955",
+        "score": 0.002074
+      }
+    ],
+    "disclaimer": "仅基于近期位频统计生成实验性结果，不构成任何投注建议。"
+  },
+  "p5": {
+    "lottery_type": "p5",
+    "display_name": "排列五",
+    "window_size": 120,
+    "latest_issue": "26162",
+    "latest_number": "36963",
+    "primary_prediction": "94533",
+    "positional_candidates": [
+      [
+        {
+          "digit": 9,
+          "count": 16,
+          "ratio": 0.1333
+        },
+        {
+          "digit": 4,
+          "count": 15,
+          "ratio": 0.125
+        },
+        {
+          "digit": 0,
+          "count": 14,
+          "ratio": 0.1167
+        }
+      ],
+      [
+        {
+          "digit": 4,
+          "count": 18,
+          "ratio": 0.15
+        },
+        {
+          "digit": 1,
+          "count": 14,
+          "ratio": 0.1167
+        },
+        {
+          "digit": 5,
+          "count": 14,
+          "ratio": 0.1167
+        }
+      ],
+      [
+        {
+          "digit": 5,
+          "count": 16,
+          "ratio": 0.1333
+        },
+        {
+          "digit": 0,
+          "count": 15,
+          "ratio": 0.125
+        },
+        {
+          "digit": 3,
+          "count": 14,
+          "ratio": 0.1167
+        }
+      ],
+      [
+        {
+          "digit": 3,
+          "count": 17,
+          "ratio": 0.1417
+        },
+        {
+          "digit": 1,
+          "count": 14,
+          "ratio": 0.1167
+        },
+        {
+          "digit": 4,
+          "count": 13,
+          "ratio": 0.1083
+        }
+      ],
+      [
+        {
+          "digit": 3,
+          "count": 21,
+          "ratio": 0.175
+        },
+        {
+          "digit": 0,
+          "count": 13,
+          "ratio": 0.1083
+        },
+        {
+          "digit": 1,
+          "count": 13,
+          "ratio": 0.1083
+        }
+      ]
+    ],
+    "recommended_combinations": [
+      {
+        "number": "94533",
+        "score": 6.6e-05
+      },
+      {
+        "number": "44533",
+        "score": 6.2e-05
+      },
+      {
+        "number": "94033",
+        "score": 6.2e-05
+      },
+      {
+        "number": "44033",
+        "score": 5.8e-05
+      },
+      {
+        "number": "94513",
+        "score": 5.4e-05
+      },
+      {
+        "number": "44513",
+        "score": 5.1e-05
+      },
+      {
+        "number": "91533",
+        "score": 5.1e-05
+      },
+      {
+        "number": "94013",
+        "score": 5.1e-05
+      },
+      {
+        "number": "41533",
+        "score": 4.8e-05
+      },
+      {
+        "number": "44013",
+        "score": 4.8e-05
+      }
+    ],
+    "disclaimer": "仅基于近期位频统计生成实验性结果，不构成任何投注建议。"
+  }
+}

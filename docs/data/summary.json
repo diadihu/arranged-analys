@@ -1,0 +1,23 @@
+{
+  "updated_at": "2026-06-22T07:50:47Z",
+  "data_source": {
+    "name": "江苏体彩网排列3/排列5历史数据页面",
+    "base_url": "https://www.js-lottery.com/wfzq/p3p5/p3data"
+  },
+  "lotteries": {
+    "p3": {
+      "display_name": "排列三",
+      "records_count": 7629,
+      "latest_issue": "26162",
+      "latest_draw_date": "2026-06-21",
+      "latest_number": "369"
+    },
+    "p5": {
+      "display_name": "排列五",
+      "records_count": 7629,
+      "latest_issue": "26162",
+      "latest_draw_date": "2026-06-21",
+      "latest_number": "36963"
+    }
+  }
+}

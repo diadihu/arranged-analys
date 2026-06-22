@@ -1,21 +1,24 @@
 # arranged-analys
 
-体彩排列三、排列五历史数据整理、分析建模与未来开奖模式研究项目。
+体彩排列三、排列五历史数据整理、抓取展示、分析建模与未来开奖模式研究项目。
 
 ## 项目目标
 
 - 统一沉淀排列三、排列五历史开奖数据
+- 自动抓取并更新历史开奖数据
 - 建立清洗、特征工程、实验建模的标准流程
 - 提供可复用的数据挖掘与基线预测代码
+- 通过 GitHub Pages 对外展示历史数据和最新预测结果
 - 为后续更复杂的时序建模、组合分析、回测评估预留结构
 
 ## 当前初始化内容
 
 - Python 项目基础结构
-- 数据目录分层
-- 历史开奖 CSV 读取器
-- 基础特征工程入口
+- 江苏体彩网历史分页抓取器
+- 历史 CSV 与前端 JSON 生成
 - 一个可运行的频次基线预测器
+- GitHub Pages 静态站点
+- GitHub Actions 自动同步与部署
 - 测试骨架
 
 ## 目录结构
@@ -26,6 +29,7 @@ arranged-analys/
 │  ├─ external/
 │  ├─ processed/
 │  └─ raw/
+├─ docs/
 ├─ scripts/
 ├─ src/
 │  └─ arranged_analys/
@@ -35,53 +39,67 @@ arranged-analys/
 └─ tests/
 ```
 
-## 建议数据格式
-
-历史开奖数据建议统一为 CSV，至少包含以下字段：
-
-```csv
-draw_date,lottery_type,issue,d1,d2,d3,d4,d5
-2026-01-01,p3,2026001,1,2,3,,
-2026-01-01,p5,2026001,1,2,3,4,5
-```
-
-说明：
-
-- `lottery_type`：`p3` 表示排列三，`p5` 表示排列五
-- `d1 ~ d5`：对应开奖数字位
-- 排列三仅使用 `d1 ~ d3`
-
-你可以把数据文件放在 `data/raw/` 下，例如：
-
-- `data/raw/p3_history.csv`
-- `data/raw/p5_history.csv`
-
 ## 快速开始
 
-1. 创建虚拟环境并安装依赖
+1. 生成历史数据和站点资源
 
 ```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-pip install -e .[dev]
+python .\scripts\build_site.py
 ```
 
-2. 准备历史数据 CSV
+脚本会自动完成：
 
-3. 运行基线预测示例
+- 抓取排列三历史数据到 `data/raw/p3_history.csv`
+- 抓取排列五历史数据到 `data/raw/p5_history.csv`
+- 生成前端 JSON 到 `docs/data/`
+- 生成预测摘要到 `data/processed/`
+
+2. 本地预览静态站点
+
+如果本地有 Python：
 
 ```powershell
-python .\scripts\run_baseline.py --file .\data\raw\p3_history.csv --type p3
-python .\scripts\run_baseline.py --file .\data\raw\p5_history.csv --type p5
+python -m http.server 8000 --directory .\docs
 ```
+
+然后访问 `http://localhost:8000`。
+
+## GitHub Pages 部署
+
+仓库内已提供两个工作流：
+
+- `.github/workflows/update-data.yml`
+  - 每天自动同步一次最新历史数据
+  - 也支持在 GitHub Actions 页面手动执行
+- `.github/workflows/deploy-pages.yml`
+  - 在 `main` 分支有提交时自动部署 `docs/`
+
+还需要在 GitHub 仓库页面手动做一次设置：
+
+1. 进入 `Settings`
+2. 打开 `Pages`
+3. 在 `Source` 中选择 `GitHub Actions`
+
+完成后，站点地址通常是：
+
+`https://diadihu.github.io/arranged-analys/`
+
+## 当前预测逻辑
+
+目前是一个简单、可解释的基线框架：
+
+- 取最近一段历史窗口
+- 分别统计每一位数字的出现频次
+- 每位最高频数字组成主推荐号码
+- 再把每位高频候选做组合，输出若干实验性推荐
 
 ## 后续建议
 
-- 增加数据采集脚本，自动同步历史开奖数据
+- 增加历史数据断点续抓和数据源容错
 - 引入遗漏值、和值、跨度、奇偶比、大小比等特征
-- 加入时间窗口训练与滚动回测
-- 增加分类模型、序列模型与组合评分机制
-- 输出实验报告与可视化分析结果
+- 加入滚动窗口回测，评估不同窗口长度
+- 增加多模型打分与组合排序
+- 增加走势图、冷热号、遗漏统计等前端分析模块
 
 ## 免责声明
 
