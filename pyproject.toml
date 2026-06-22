@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling>=1.25.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "arranged-analys"
+version = "0.1.0"
+description = "Data mining and baseline prediction experiments for Chinese lottery arranged 3 and arranged 5."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+  { name = "diadihu" }
+]
+dependencies = [
+  "pandas>=2.2.2",
+  "numpy>=1.26.4",
+  "scikit-learn>=1.5.1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.2.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/arranged_analys"]
