@@ -7,7 +7,7 @@
 - 使用中国体彩网官方高速 JSON 接口同步排列三、排列五历史开奖数据
 - 构建可复用的数据清洗、特征工程、训练、交叉验证与回测流程
 - 提供一套可解释的简单推荐框架，并通过静态站点公开展示
-- 通过 GitHub Actions 自动更新数据并自动发布到 GitHub Pages
+- 通过 GitHub Actions 自动更新数据，并由 GitHub Pages 直接发布 `main/docs`
 
 ## 当前能力
 
@@ -72,28 +72,37 @@ python -m http.server 8000 --directory .\docs
 
 浏览器访问 [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
-## GitHub Pages 自动发布
+## GitHub Pages 发布方式
 
-仓库当前有两条工作流：
+推荐使用最稳定的静态目录发布方式：
 
-- `.github/workflows/deploy-pages.yml`
-  - 当 `main` 分支有新提交时，自动把仓库里的 `docs/` 发布到 GitHub Pages
+1. 打开仓库 `Settings`
+2. 打开 `Pages`
+3. 在 `Build and deployment -> Source` 里选择 `Deploy from a branch`
+4. Branch 选择 `main`
+5. Folder 选择 `/docs`
+
+这样之后：
+
+- 站点静态文件直接来自仓库里的 `docs/`
+- 每次 `main` 分支更新后，GitHub Pages 自动重新发布
+- 不再依赖 `actions/deploy-pages` 的后端部署队列
+
+项目 Pages 地址通常是：
+
+`https://diadihu.github.io/arranged-analys/`
+
+## 自动数据更新
+
+仓库当前保留一条工作流：
+
 - `.github/workflows/update-data.yml`
   - 支持手动触发
   - 每天定时抓取最新开奖数据
   - 自动运行 `python scripts/build_site.py`
   - 自动提交 `data/raw`、`data/processed`、`docs/data`
-  - 自动把最新站点重新发布到 GitHub Pages
 
-首次启用时，还需要在 GitHub 仓库页面手动设置一次：
-
-1. 打开 `Settings`
-2. 打开 `Pages`
-3. 在 `Build and deployment -> Source` 里选择 `GitHub Actions`
-
-项目 Pages 地址通常是：
-
-`https://diadihu.github.io/arranged-analys/`
+由于 Pages 直接发布 `main/docs`，所以这条工作流只要把最新数据提交回 `main`，站点就会自动更新。
 
 ## 当前推荐框架
 
