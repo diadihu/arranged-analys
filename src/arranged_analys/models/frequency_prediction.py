@@ -93,7 +93,7 @@ def build_frequency_prediction(
         primary_prediction="".join(primary_digits),
         positional_candidates=positional_candidates,
         recommended_combinations=recommended_combinations,
-        disclaimer="仅基于近期位频统计生成实验性结果，不构成任何投注建议。",
+        disclaimer="仅基于近期开奖频次生成实验性结果，不构成任何投注建议。",
     )
 
 

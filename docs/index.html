@@ -3,21 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>体彩排列分析看板</title>
-  <meta name="description" content="体彩排列三与排列五历史数据、最新开奖和简单预测框架展示。">
+  <title>体彩排列三 / 排列五训练回测看板</title>
+  <meta
+    name="description"
+    content="展示中国体彩网排列三、排列五历史数据，以及基于训练、时序交叉验证和回测排序的简单推荐框架。"
+  >
   <link rel="stylesheet" href="./assets/styles.css">
 </head>
 <body>
   <div class="page-shell">
     <header class="hero">
-      <p class="eyebrow">体彩数据实验站</p>
-      <h1>排列三 / 排列五 历史数据与简单预测</h1>
+      <p class="eyebrow">Sporttery Data Lab</p>
+      <h1>排列三 / 排列五 历史数据、训练回测与组合推荐</h1>
       <p class="hero-copy">
-        站点通过 Python 定时抓取历史开奖数据，生成静态 JSON，并在 GitHub Pages 上展示最新历史记录与一个可解释的基线预测结果。
+        数据来自中国体彩网官方高速 JSON 接口。页面同时展示历史开奖、频次基线、机器学习模型筛选、
+        时序交叉验证与回测结果，并给出一套可解释的简单组合排序框架。
       </p>
       <div class="hero-meta">
         <div>
-          <span class="meta-label">数据来源</span>
+          <span class="meta-label">数据源</span>
           <span id="data-source-name">加载中</span>
         </div>
         <div>
@@ -33,7 +37,7 @@
           <button class="tab-button active" data-type="p3">排列三</button>
           <button class="tab-button" data-type="p5">排列五</button>
         </div>
-        <div class="card-grid">
+        <div class="card-grid card-grid-wide">
           <article class="stat-card">
             <span class="stat-label">最新期号</span>
             <strong id="latest-issue">-</strong>
@@ -47,8 +51,19 @@
             <strong id="records-count">-</strong>
           </article>
           <article class="stat-card">
-            <span class="stat-label">基线主推荐</span>
-            <strong id="primary-prediction">-</strong>
+            <span class="stat-label">频次基线</span>
+            <strong id="baseline-prediction">-</strong>
+            <small>基于近期开奖位置频率</small>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">最优组合</span>
+            <strong id="best-combo-number">-</strong>
+            <small id="best-combo-score">-</small>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">最优模型</span>
+            <strong id="best-model-name">-</strong>
+            <small id="best-model-config">-</small>
           </article>
         </div>
       </section>
@@ -56,30 +71,67 @@
       <section class="panel">
         <div class="section-head">
           <div>
-            <h2>位频候选</h2>
-            <p>基于最近窗口数据统计各位置出现频次，取最高频数字作为主推荐。</p>
+            <h2>回测摘要</h2>
+            <p>按时间顺序切分训练集、交叉验证集与留后回测集，优先比较命中位数、整组命中率和数字重叠率。</p>
           </div>
-          <span id="window-size-chip" class="chip">窗口 -</span>
+          <span id="holdout-chip" class="chip">回测窗口 -</span>
         </div>
-        <div id="position-candidates" class="candidate-columns"></div>
+        <div id="metrics-grid" class="metrics-grid"></div>
         <p id="prediction-disclaimer" class="disclaimer"></p>
       </section>
 
       <section class="panel">
         <div class="section-head">
           <div>
-            <h2>推荐组合</h2>
-            <p>从每一位的高频候选组合出一组实验性号码，分数越高代表近期位频乘积越大。</p>
+            <h2>位置候选概率</h2>
+            <p>展示当前最优模型在下一期各位置的高概率数字分布，便于和频次基线做对照。</p>
           </div>
         </div>
+        <div id="position-candidates" class="candidate-columns"></div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <div>
+            <h2>最优组合</h2>
+            <p>组合得分由模型概率、近期频次、胆码/独胆和和值尾数规则共同加权得到。</p>
+          </div>
+          <span id="rule-profile-chip" class="chip">规则加载中</span>
+        </div>
+        <div id="best-combination" class="highlight-card"></div>
         <div id="recommended-combinations" class="combination-list"></div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <div>
+            <h2>模型排行榜</h2>
+            <p>参考 GitHub 上的历史开奖预测做法，保留多模型基准测试，并结合时序交叉验证与留后回测选择当前组合。</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>模型</th>
+                <th>特征集</th>
+                <th>CV 平均命中位数</th>
+                <th>回测平均命中位数</th>
+                <th>回测整组命中率</th>
+                <th>回测数字重叠率</th>
+                <th>回测至少 1 位命中率</th>
+              </tr>
+            </thead>
+            <tbody id="benchmark-table-body"></tbody>
+          </table>
+        </div>
       </section>
 
       <section class="panel panel-history">
         <div class="section-head history-head">
           <div>
             <h2>历史开奖</h2>
-            <p>支持按期号或日期快速筛选，默认每页展示 20 条。</p>
+            <p>支持按期号或日期搜索，默认按时间倒序分页显示。</p>
           </div>
           <label class="search-box">
             <span>搜索</span>

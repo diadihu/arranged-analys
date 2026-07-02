@@ -27,19 +27,88 @@ function formatDateTime(isoString) {
   return date.toLocaleString("zh-CN", { hour12: false });
 }
 
+function formatPercent(value) {
+  return `${(value * 100).toFixed(2)}%`;
+}
+
+function formatMetricLabel(label, value) {
+  if (label === "平均命中位数") {
+    return value.toFixed(3);
+  }
+  return formatPercent(value);
+}
+
+function getPrediction() {
+  return state.predictions[state.currentType];
+}
+
+function getBestBenchmark() {
+  const prediction = getPrediction();
+  return prediction.benchmark_table.find(
+    (item) =>
+      item.model_name === prediction.best_model_name &&
+      item.feature_config === prediction.best_feature_config,
+  );
+}
+
 function renderSummary() {
   const summary = state.summary.lotteries[state.currentType];
-  const prediction = state.predictions[state.currentType];
+  const prediction = getPrediction();
+
   document.getElementById("latest-issue").textContent = summary.latest_issue;
   document.getElementById("latest-number").textContent = summary.latest_number;
   document.getElementById("records-count").textContent = summary.records_count.toLocaleString("zh-CN");
-  document.getElementById("primary-prediction").textContent = prediction.primary_prediction;
-  document.getElementById("window-size-chip").textContent = `预测窗口 ${prediction.window_size} 期`;
+  document.getElementById("baseline-prediction").textContent = prediction.baseline_prediction;
+  document.getElementById("best-combo-number").textContent = prediction.best_combo.number;
+  document.getElementById("best-combo-score").textContent = `综合得分 ${prediction.best_combo.combined_score.toFixed(6)}`;
+  document.getElementById("best-model-name").textContent = prediction.best_model_name;
+  document.getElementById("best-model-config").textContent = prediction.best_feature_config;
+  document.getElementById("holdout-chip").textContent = `回测窗口 ${prediction.holdout_size} 期`;
   document.getElementById("prediction-disclaimer").textContent = prediction.disclaimer;
+
+  const ruleProfile = prediction.rule_profile;
+  document.getElementById("rule-profile-chip").textContent =
+    `胆码 ${ruleProfile.danma_digits.join("")} / 独胆 ${ruleProfile.dudan_digits.join("")}`;
+}
+
+function renderMetrics() {
+  const prediction = getPrediction();
+  const bestBenchmark = getBestBenchmark();
+  const container = document.getElementById("metrics-grid");
+  container.innerHTML = "";
+
+  const metricEntries = [
+    ["平均命中位数", prediction.holdout_metrics.mean_position_hits],
+    ["位置命中率", prediction.holdout_metrics.position_accuracy],
+    ["整组命中率", prediction.holdout_metrics.exact_match_rate],
+    ["数字重叠率", prediction.holdout_metrics.mean_digit_overlap],
+    ["至少 1 位命中率", prediction.holdout_metrics.at_least_one_hit_rate],
+  ];
+
+  metricEntries.forEach(([label, value]) => {
+    const card = document.createElement("article");
+    card.className = "metric-box";
+    card.innerHTML = `
+      <span>${label}</span>
+      <strong>${formatMetricLabel(label, value)}</strong>
+    `;
+    container.appendChild(card);
+  });
+
+  if (bestBenchmark) {
+    const cvCard = document.createElement("article");
+    cvCard.className = "metric-box";
+    cvCard.innerHTML = `
+      <span>CV 平均命中位数</span>
+      <strong>${bestBenchmark.cv_metrics.mean_position_hits.toFixed(3)}</strong>
+      <small>${prediction.best_feature_config}</small>
+    `;
+    container.appendChild(cvCard);
+  }
 }
 
 function renderCandidates() {
-  const prediction = state.predictions[state.currentType];
+  const prediction = getPrediction();
   const container = document.getElementById("position-candidates");
   container.innerHTML = "";
 
@@ -56,9 +125,9 @@ function renderCandidates() {
       item.innerHTML = `
         <div class="candidate-item-head">
           <strong>${candidate.digit}</strong>
-          <span>${(candidate.ratio * 100).toFixed(2)}%</span>
+          <span>${formatPercent(candidate.probability)}</span>
         </div>
-        <div class="bar"><span style="width:${candidate.ratio * 100}%"></span></div>
+        <div class="bar"><span style="width:${candidate.probability * 100}%"></span></div>
       `;
       card.appendChild(item);
     });
@@ -68,19 +137,59 @@ function renderCandidates() {
 }
 
 function renderCombinations() {
-  const prediction = state.predictions[state.currentType];
+  const prediction = getPrediction();
   const container = document.getElementById("recommended-combinations");
+  const bestContainer = document.getElementById("best-combination");
   container.innerHTML = "";
 
-  prediction.recommended_combinations.forEach((combination, index) => {
+  const [best, ...rest] = prediction.recommended_combinations;
+  bestContainer.innerHTML = `
+    <div class="combination-card-best">
+      <span>当前最优组合</span>
+      <strong>${best.number}</strong>
+      <p>综合得分 ${best.combined_score.toFixed(6)}，模型概率 ${best.ml_probability.toFixed(8)}，频次分 ${best.frequency_score.toFixed(6)}，规则分 ${best.rule_score.toFixed(6)}</p>
+      <p class="combination-note">${best.explanation.length ? best.explanation.join("；") : "无额外规则说明"}</p>
+    </div>
+  `;
+
+  rest.forEach((combination, index) => {
     const card = document.createElement("article");
     card.className = "combination-card";
     card.innerHTML = `
-      <span>推荐 ${index + 1}</span>
+      <span>候选 ${index + 2}</span>
       <strong>${combination.number}</strong>
-      <span>分数 ${combination.score.toFixed(6)}</span>
+      <small>综合得分 ${combination.combined_score.toFixed(6)}</small>
+      <p class="combination-note">${combination.explanation.length ? combination.explanation.join("；") : "无额外规则说明"}</p>
     `;
     container.appendChild(card);
+  });
+}
+
+function renderBenchmarkTable() {
+  const prediction = getPrediction();
+  const tbody = document.getElementById("benchmark-table-body");
+  tbody.innerHTML = "";
+
+  prediction.benchmark_table.forEach((benchmark) => {
+    const tr = document.createElement("tr");
+    const isBest =
+      benchmark.model_name === prediction.best_model_name &&
+      benchmark.feature_config === prediction.best_feature_config;
+
+    if (isBest) {
+      tr.classList.add("is-best-row");
+    }
+
+    tr.innerHTML = `
+      <td>${benchmark.model_name}</td>
+      <td>${benchmark.feature_config}</td>
+      <td>${benchmark.cv_metrics.mean_position_hits.toFixed(3)}</td>
+      <td>${benchmark.holdout_metrics.mean_position_hits.toFixed(3)}</td>
+      <td>${formatPercent(benchmark.holdout_metrics.exact_match_rate)}</td>
+      <td>${formatPercent(benchmark.holdout_metrics.mean_digit_overlap)}</td>
+      <td>${formatPercent(benchmark.holdout_metrics.at_least_one_hit_rate)}</td>
+    `;
+    tbody.appendChild(tr);
   });
 }
 
@@ -89,8 +198,8 @@ function getFilteredRecords() {
   if (!state.searchTerm) {
     return records;
   }
-  return records.filter((record) =>
-    record.issue.includes(state.searchTerm) || record.draw_date.includes(state.searchTerm),
+  return records.filter(
+    (record) => record.issue.includes(state.searchTerm) || record.draw_date.includes(state.searchTerm),
   );
 }
 
@@ -122,8 +231,10 @@ function renderHistory() {
 
 function renderAll() {
   renderSummary();
+  renderMetrics();
   renderCandidates();
   renderCombinations();
+  renderBenchmarkTable();
   renderHistory();
 }
 

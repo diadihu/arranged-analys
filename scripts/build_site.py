@@ -11,7 +11,7 @@ if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from arranged_analys.data.sporttery import fetch_history, read_history_csv, updated_at_iso, write_history_csv
-from arranged_analys.models.frequency_prediction import build_frequency_prediction
+from arranged_analys.models.hybrid_prediction import build_advanced_prediction
 
 DATA_RAW_DIR = ROOT / "data" / "raw"
 DATA_PROCESSED_DIR = ROOT / "data" / "processed"
@@ -26,13 +26,14 @@ def write_json(file_path: Path, payload: object) -> None:
 def build_site_data() -> None:
     updated_at = updated_at_iso()
     all_predictions: dict[str, object] = {}
+    all_benchmarks: dict[str, object] = {}
     summary_lotteries: dict[str, object] = {}
 
     for lottery_type in ("p3", "p5"):
         csv_path = DATA_RAW_DIR / f"{lottery_type}_history.csv"
         existing_records = read_history_csv(csv_path)
         records = fetch_history(lottery_type, existing_records=existing_records)
-        prediction = build_frequency_prediction(records, lottery_type=lottery_type)
+        prediction, benchmark_result = build_advanced_prediction(records, lottery_type=lottery_type)
         latest = records[-1]
 
         write_history_csv(records, csv_path)
@@ -50,13 +51,17 @@ def build_site_data() -> None:
             "latest_issue": latest.issue,
             "latest_draw_date": latest.draw_date,
             "latest_number": latest.number,
+            "best_model_name": prediction.best_model_name,
+            "best_feature_config": prediction.best_feature_config,
+            "best_combo": prediction.best_combo["number"],
         }
         all_predictions[lottery_type] = prediction.to_dict()
+        all_benchmarks[lottery_type] = benchmark_result.to_dict()
 
     summary_payload = {
         "updated_at": updated_at,
         "data_source": {
-            "name": "中国体彩网官方 JSON 接口",
+            "name": "中国体彩网官方高速 JSON 接口",
             "history_api": "https://webapi.sporttery.cn/gateway/lottery/getHistoryPageListV1.qry",
             "latest_api": "https://webapi.sporttery.cn/gateway/lottery/getDigitalDrawInfoV1.qry",
             "official_page": "https://m.lottery.gov.cn/mkjpls/",
@@ -66,8 +71,10 @@ def build_site_data() -> None:
 
     write_json(DATA_PROCESSED_DIR / "summary.json", summary_payload)
     write_json(DATA_PROCESSED_DIR / "predictions.json", all_predictions)
+    write_json(DATA_PROCESSED_DIR / "benchmarks.json", all_benchmarks)
     write_json(DOCS_DATA_DIR / "summary.json", summary_payload)
     write_json(DOCS_DATA_DIR / "predictions.json", all_predictions)
+    write_json(DOCS_DATA_DIR / "benchmarks.json", all_benchmarks)
 
 
 if __name__ == "__main__":

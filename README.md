@@ -1,30 +1,34 @@
 # arranged-analys
 
-体彩排列三、排列五历史数据整理、官方接口抓取展示、分析建模与未来开奖模式研究项目。
+中国体彩排列三、排列五历史数据抓取、训练回测、组合推荐与 GitHub Pages 展示项目。
 
 ## 项目目标
 
-- 统一沉淀排列三、排列五历史开奖数据
-- 通过中国体彩网官方 JSON 接口自动抓取并更新历史开奖数据
-- 建立清洗、特征工程、实验建模的标准流程
-- 提供可复用的数据挖掘与基线预测代码
-- 通过 GitHub Pages 对外展示历史数据和最新预测结果
-- 为后续更复杂的时序建模、组合分析、回测评估预留结构
+- 使用中国体彩网官方高速 JSON 接口同步排列三、排列五历史开奖数据
+- 构建可复用的数据清洗、特征工程、训练、交叉验证与回测流程
+- 提供一套可解释的简单推荐框架，并通过静态站点公开展示
+- 通过 GitHub Actions 自动更新数据并自动发布到 GitHub Pages
 
-## 当前初始化内容
+## 当前能力
 
-- Python 项目基础结构
-- 中国体彩网官方 JSON 接口抓取器
-- 历史 CSV 与前端 JSON 生成
-- 一个可运行的频次基线预测器
-- GitHub Pages 静态站点
-- GitHub Actions 自动同步与部署
-- 测试骨架
+- 官方历史开奖接口抓取与本地 CSV 归档
+- 频次基线预测
+- 基于滞后特征和滚动窗口统计的监督学习特征工程
+- 时序交叉验证与留后回测
+- 多模型基准筛选
+  - `logreg`
+  - `knn`
+  - `random_forest`
+  - `extra_trees`
+- 基于模型概率、近期频次、胆码/独胆、和值尾数的组合排序
+- GitHub Pages 静态站点展示历史开奖、回测指标、模型排行与推荐组合
 
 ## 目录结构
 
 ```text
 arranged-analys/
+├─ .github/
+│  └─ workflows/
 ├─ data/
 │  ├─ external/
 │  ├─ processed/
@@ -39,89 +43,68 @@ arranged-analys/
 └─ tests/
 ```
 
-## 快速开始
+## 本地启动
 
-1. 生成历史数据和站点资源
-
-```powershell
-python .\scripts\build_site.py
-```
-
-在首次本地运行前，建议先安装依赖：
+1. 安装依赖
 
 ```powershell
 pip install -e .
 ```
 
-脚本会自动完成：
+2. 构建历史数据与站点数据
 
-- 抓取排列三历史数据到 `data/raw/p3_history.csv`
-- 抓取排列五历史数据到 `data/raw/p5_history.csv`
-- 生成前端 JSON 到 `docs/data/`
-- 生成预测摘要到 `data/processed/`
+```powershell
+python .\scripts\build_site.py
+```
 
-2. 本地预览静态站点
+脚本会更新这些内容：
 
-如果本地有 Python：
+- `data/raw/p3_history.csv`
+- `data/raw/p5_history.csv`
+- `data/processed/*.json`
+- `docs/data/*.json`
+
+3. 本地预览静态站点
 
 ```powershell
 python -m http.server 8000 --directory .\docs
 ```
 
-然后访问 `http://localhost:8000`。
+浏览器访问 [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
-## GitHub Pages 部署
+## GitHub Pages 自动发布
 
-仓库内已提供两个工作流：
+仓库当前有两条工作流：
 
-- `.github/workflows/update-data.yml`
-  - 每天自动同步一次最新历史数据
-  - 也支持在 GitHub Actions 页面手动执行
 - `.github/workflows/deploy-pages.yml`
-  - 在 `main` 分支有提交时自动部署 `docs/`
+  - 当 `main` 分支有新提交时，自动把仓库里的 `docs/` 发布到 GitHub Pages
+- `.github/workflows/update-data.yml`
+  - 支持手动触发
+  - 每天定时抓取最新开奖数据
+  - 自动运行 `python scripts/build_site.py`
+  - 自动提交 `data/raw`、`data/processed`、`docs/data`
+  - 自动把最新站点重新发布到 GitHub Pages
 
-还需要在 GitHub 仓库页面手动做一次设置：
+首次启用时，还需要在 GitHub 仓库页面手动设置一次：
 
-1. 进入 `Settings`
+1. 打开 `Settings`
 2. 打开 `Pages`
-3. 在 `Source` 中选择 `GitHub Actions`
+3. 在 `Build and deployment -> Source` 里选择 `GitHub Actions`
 
-完成后，站点地址通常是：
+项目 Pages 地址通常是：
 
 `https://diadihu.github.io/arranged-analys/`
 
-## 当前预测逻辑
+## 当前推荐框架
 
-目前是一个简单、可解释的基线框架：
+当前不是“预测中奖”的强模型，而是一个可解释的数据实验框架，流程如下：
 
-- 取最近一段历史窗口
-- 分别统计每一位数字的出现频次
-- 每位最高频数字组成主推荐号码
-- 再把每位高频候选做组合，输出若干实验性推荐
-
-## 后续建议
-
-- 增加历史数据断点续抓和数据源容错
-- 引入遗漏值、和值、跨度、奇偶比、大小比等特征
-- 加入滚动窗口回测，评估不同窗口长度
-- 增加多模型打分与组合排序
-- 增加走势图、冷热号、遗漏统计等前端分析模块
-
-## 当前官方接口说明
-
-当前接入的是中国体彩网页面脚本实际调用的官方接口：
-
-- 历史分页接口：`getHistoryPageListV1.qry`
-
-由于官方接口有风控拦截，普通 `requests/urllib` 在部分环境会返回 `403` 或 `567`，当前项目使用 `curl-cffi` 以浏览器指纹方式访问官方接口。
-
-当前实现策略：
-
-- 每次从官方 JSON 接口刷新最新历史页
-- 再与仓库内已有历史归档合并
-
-这样可以稳定保持“最新数据来自官方接口”，同时避免官方深翻页请求在无浏览器会话环境下被 WAF 拦截。
+1. 对最近一段历史开奖构造滞后特征和滚动统计特征
+2. 用多模型做时序交叉验证和留后回测
+3. 按回测命中位数、整组命中率、数字重叠率等指标挑选当前最优模型
+4. 输出下一期每一位的候选数字概率
+5. 结合近期频次与简单规则对组合重新排序
 
 ## 免责声明
 
-本项目仅用于数据分析、建模实验与研究，不构成任何中奖承诺或投资建议。
+本项目仅用于数据分析、建模实验与研究展示，不构成任何投注建议或收益承诺。

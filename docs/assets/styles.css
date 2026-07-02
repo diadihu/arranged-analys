@@ -138,6 +138,10 @@ input {
   margin-top: 18px;
 }
 
+.card-grid-wide {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
 .stat-card {
   padding: 18px;
   border-radius: 20px;
@@ -146,6 +150,13 @@ input {
 
 .stat-card strong {
   font-size: clamp(1.3rem, 3vw, 2rem);
+}
+
+.stat-card small {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  line-height: 1.5;
 }
 
 .section-head {
@@ -174,6 +185,35 @@ input {
   background: var(--accent-soft);
   color: var(--accent);
   font-weight: 700;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.metric-box {
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.metric-box span,
+.metric-box small {
+  display: block;
+  color: var(--muted);
+}
+
+.metric-box strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 1.4rem;
+}
+
+.metric-box small {
+  margin-top: 8px;
 }
 
 .candidate-columns {
@@ -217,12 +257,17 @@ input {
   background: linear-gradient(90deg, #ff8a42, #d94f04);
 }
 
+.highlight-card {
+  margin-bottom: 14px;
+}
+
 .combination-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 12px;
 }
 
+.combination-card-best,
 .combination-card {
   padding: 14px 16px;
   border-radius: 18px;
@@ -230,9 +275,33 @@ input {
   background: rgba(255, 255, 255, 0.74);
 }
 
+.combination-card-best {
+  padding: 18px 20px;
+  background:
+    linear-gradient(135deg, rgba(255, 161, 97, 0.22), rgba(255, 255, 255, 0.92)),
+    rgba(255, 255, 255, 0.86);
+}
+
 .combination-card strong {
   display: block;
   font-size: 1.35rem;
+}
+
+.combination-card small,
+.combination-card-best p,
+.combination-card-best span {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.combination-card-best strong {
+  display: block;
+  margin: 10px 0 12px;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+}
+
+.combination-note {
+  margin: 8px 0 0;
 }
 
 .table-wrap {
@@ -253,6 +322,10 @@ td {
 
 tbody tr:hover {
   background: rgba(255, 243, 230, 0.8);
+}
+
+.is-best-row {
+  background: rgba(255, 233, 208, 0.7);
 }
 
 .history-head {

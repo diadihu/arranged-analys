@@ -1,6 +1,6 @@
 {
   "lottery_type": "p3",
-  "updated_at": "2026-06-22T08:19:22Z",
+  "updated_at": "2026-07-02T15:33:01Z",
   "records": [
     {
       "lottery_type": "p3",
@@ -99178,6 +99178,149 @@
       ],
       "number": "369",
       "detail_url": "https://pdf.sporttery.cn/28200/26162/26162.pdf"
+    },
+    {
+      "lottery_type": "p3",
+      "display_name": "排列三",
+      "issue": "26163",
+      "draw_date": "2026-06-22",
+      "digits": [
+        3,
+        4,
+        6
+      ],
+      "number": "346",
+      "detail_url": "https://pdf.sporttery.cn/28200/26163/26163.pdf"
+    },
+    {
+      "lottery_type": "p3",
+      "display_name": "排列三",
+      "issue": "26164",
+      "draw_date": "2026-06-23",
+      "digits": [
+        7,
+        1,
+        5
+      ],
+      "number": "715",
+      "detail_url": "https://pdf.sporttery.cn/28200/26164/26164.pdf"
+    },
+    {
+      "lottery_type": "p3",
+      "display_name": "排列三",
+      "issue": "26165",
+      "draw_date": "2026-06-24",
+      "digits": [
+        2,
+        9,
+        4
+      ],
+      "number": "294",
+      "detail_url": "https://pdf.sporttery.cn/28200/26165/26165.pdf"
+    },
+    {
+      "lottery_type": "p3",
+      "display_name": "排列三",
+      "issue": "26166",
+      "draw_date": "2026-06-25",
+      "digits": [
+        2,
+        2,
+        9
+      ],
+      "number": "229",
+      "detail_url": "https://pdf.sporttery.cn/28200/26166/26166.pdf"
+    },
+    {
+      "lottery_type": "p3",
+      "display_name": "排列三",
+      "issue": "26167",
+      "draw_date": "2026-06-26",
+      "digits": [
+        0,
+        1,
+        2
+      ],
+      "number": "012",
+      "detail_url": "https://pdf.sporttery.cn/28200/26167/26167.pdf"
+    },
+    {
+      "lottery_type": "p3",
+      "display_name": "排列三",
+      "issue": "26168",
+      "draw_date": "2026-06-27",
+      "digits": [
+        1,
+        9,
+        2
+      ],
+      "number": "192",
+      "detail_url": "https://pdf.sporttery.cn/28200/26168/26168.pdf"
+    },
+    {
+      "lottery_type": "p3",
+      "display_name": "排列三",
+      "issue": "26169",
+      "draw_date": "2026-06-28",
+      "digits": [
+        8,
+        8,
+        4
+      ],
+      "number": "884",
+      "detail_url": "https://pdf.sporttery.cn/28200/26169/26169.pdf"
+    },
+    {
+      "lottery_type": "p3",
+      "display_name": "排列三",
+      "issue": "26170",
+      "draw_date": "2026-06-29",
+      "digits": [
+        4,
+        1,
+        7
+      ],
+      "number": "417",
+      "detail_url": "https://pdf.sporttery.cn/28200/26170/26170.pdf"
+    },
+    {
+      "lottery_type": "p3",
+      "display_name": "排列三",
+      "issue": "26171",
+      "draw_date": "2026-06-30",
+      "digits": [
+        0,
+        4,
+        8
+      ],
+      "number": "048",
+      "detail_url": "https://pdf.sporttery.cn/28200/26171/26171.pdf"
+    },
+    {
+      "lottery_type": "p3",
+      "display_name": "排列三",
+      "issue": "26172",
+      "draw_date": "2026-07-01",
+      "digits": [
+        7,
+        7,
+        1
+      ],
+      "number": "771",
+      "detail_url": "https://pdf.sporttery.cn/28200/26172/26172.pdf"
+    },
+    {
+      "lottery_type": "p3",
+      "display_name": "排列三",
+      "issue": "26173",
+      "draw_date": "2026-07-02",
+      "digits": [
+        2,
+        5,
+        9
+      ],
+      "number": "259",
+      "detail_url": "https://pdf.sporttery.cn/28200/26173/26173.pdf"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-06-22T08:19:22Z",
+  "updated_at": "2026-07-02T15:33:01Z",
   "data_source": {
-    "name": "中国体彩网官方 JSON 接口",
+    "name": "中国体彩网官方高速 JSON 接口",
     "history_api": "https://webapi.sporttery.cn/gateway/lottery/getHistoryPageListV1.qry",
     "latest_api": "https://webapi.sporttery.cn/gateway/lottery/getDigitalDrawInfoV1.qry",
     "official_page": "https://m.lottery.gov.cn/mkjpls/"
@@ -9,17 +9,23 @@
   "lotteries": {
     "p3": {
       "display_name": "排列三",
-      "records_count": 7629,
-      "latest_issue": "26162",
-      "latest_draw_date": "2026-06-21",
-      "latest_number": "369"
+      "records_count": 7640,
+      "latest_issue": "26173",
+      "latest_draw_date": "2026-07-02",
+      "latest_number": "259",
+      "best_model_name": "random_forest",
+      "best_feature_config": "lag10_win5_10_20_30",
+      "best_combo": "551"
     },
     "p5": {
       "display_name": "排列五",
-      "records_count": 7629,
-      "latest_issue": "26162",
-      "latest_draw_date": "2026-06-21",
-      "latest_number": "36963"
+      "records_count": 7640,
+      "latest_issue": "26173",
+      "latest_draw_date": "2026-07-02",
+      "latest_number": "25975",
+      "best_model_name": "random_forest",
+      "best_feature_config": "lag10_win5_10_20_30",
+      "best_combo": "25146"
     }
   }
 }

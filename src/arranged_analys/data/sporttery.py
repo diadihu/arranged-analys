@@ -1,10 +1,10 @@
 from __future__ import annotations
 
+import csv
+import time
 from dataclasses import asdict, dataclass
 from datetime import datetime
 from pathlib import Path
-import csv
-import time
 from typing import Any, Iterable
 
 from curl_cffi import requests as curl_requests
@@ -138,7 +138,7 @@ def parse_draw_item(item: dict[str, Any], lottery_type: str) -> DrawRecord:
     detail_url = str(item.get("drawPdfUrl") or "").strip()
     return DrawRecord(
         lottery_type=lottery_type,
-        display_name=config["display_name"],
+        display_name=str(config["display_name"]),
         issue=str(item["lotteryDrawNum"]).strip(),
         draw_date=draw_date,
         digits=digits,
