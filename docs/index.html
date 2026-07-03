@@ -6,7 +6,7 @@
   <title>体彩排列三 / 排列五训练回测看板</title>
   <meta
     name="description"
-    content="展示中国体彩网排列三、排列五历史数据，以及基于训练、时序交叉验证和回测排序的简单推荐框架。"
+    content="展示中国体彩网排列三、排列五历史数据，以及基于训练、时序交叉验证、位置回测和组合回放的简单预测框架。"
   >
   <link rel="stylesheet" href="./assets/styles.css">
 </head>
@@ -14,10 +14,10 @@
   <div class="page-shell">
     <header class="hero">
       <p class="eyebrow">Sporttery Data Lab</p>
-      <h1>排列三 / 排列五 历史数据、训练回测与组合推荐</h1>
+      <h1>体彩排列三 / 排列五历史数据、训练回测与组合推荐</h1>
       <p class="hero-copy">
-        数据来自中国体彩网官方高速 JSON 接口。页面同时展示历史开奖、频次基线、机器学习模型筛选、
-        时序交叉验证与回测结果，并给出一套可解释的简单组合排序框架。
+        数据来自中国体彩网官方高速 JSON 接口。页面同时展示历史开奖、位置级模型筛选、
+        时序交叉验证、留后回测，以及可解释的组合排序结果。
       </p>
       <div class="hero-meta">
         <div>
@@ -72,9 +72,9 @@
         <div class="section-head">
           <div>
             <h2>回测摘要</h2>
-            <p>按时间顺序切分训练集、交叉验证集与留后回测集，优先比较命中位数、整组命中率和数字重叠率。</p>
+            <p>优先看位置级稳定性，再看组合级回放覆盖率，避免单靠局部规则推高推荐结果。</p>
           </div>
-          <span id="holdout-chip" class="chip">回测窗口 -</span>
+          <span id="holdout-chip" class="chip">留后回测窗口 -</span>
         </div>
         <div id="metrics-grid" class="metrics-grid"></div>
         <p id="prediction-disclaimer" class="disclaimer"></p>
@@ -84,7 +84,7 @@
         <div class="section-head">
           <div>
             <h2>位置候选概率</h2>
-            <p>展示当前最优模型在下一期各位置的高概率数字分布，便于和频次基线做对照。</p>
+            <p>展示当前最优模型对下一期各位置的高概率数字分布。</p>
           </div>
         </div>
         <div id="position-candidates" class="candidate-columns"></div>
@@ -94,7 +94,7 @@
         <div class="section-head">
           <div>
             <h2>最优组合</h2>
-            <p>组合得分由模型概率、近期频次、胆码/独胆和和值尾数规则共同加权得到。</p>
+            <p>组合得分由模型概率、近期频次和弱化后的规则项共同决定，并用组合级回放做二次验证。</p>
           </div>
           <span id="rule-profile-chip" class="chip">规则加载中</span>
         </div>
@@ -105,8 +105,8 @@
       <section class="panel">
         <div class="section-head">
           <div>
-            <h2>模型排行榜</h2>
-            <p>参考 GitHub 上的历史开奖预测做法，保留多模型基准测试，并结合时序交叉验证与留后回测选择当前组合。</p>
+            <h2>模型基准表</h2>
+            <p>保留多模型对比，按时序交叉验证与留后回测共同选择当前最稳的一组。</p>
           </div>
         </div>
         <div class="table-wrap">
@@ -131,7 +131,7 @@
         <div class="section-head history-head">
           <div>
             <h2>历史开奖</h2>
-            <p>支持按期号或日期搜索，默认按时间倒序分页显示。</p>
+            <p>支持按期号或日期搜索，默认按时间倒序分页展示。</p>
           </div>
           <label class="search-box">
             <span>搜索</span>

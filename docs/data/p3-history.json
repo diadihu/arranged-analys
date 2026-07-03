@@ -1,6 +1,6 @@
 {
   "lottery_type": "p3",
-  "updated_at": "2026-07-02T15:33:01Z",
+  "updated_at": "2026-07-03T15:03:29Z",
   "records": [
     {
       "lottery_type": "p3",
@@ -99321,6 +99321,19 @@
       ],
       "number": "259",
       "detail_url": "https://pdf.sporttery.cn/28200/26173/26173.pdf"
+    },
+    {
+      "lottery_type": "p3",
+      "display_name": "排列三",
+      "issue": "26174",
+      "draw_date": "2026-07-03",
+      "digits": [
+        1,
+        5,
+        7
+      ],
+      "number": "157",
+      "detail_url": "https://pdf.sporttery.cn/28200/26174/26174.pdf"
     }
   ]
 }

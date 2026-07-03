@@ -39,6 +39,19 @@ class BenchmarkMetrics:
 
 
 @dataclass(slots=True)
+class CombinationBacktestMetrics:
+    sample_count: int
+    top1_exact_rate: float
+    top5_exact_rate: float
+    top10_exact_rate: float
+    top1_mean_digit_overlap: float
+    top1_at_least_one_hit_rate: float
+
+    def to_dict(self) -> dict[str, float | int]:
+        return asdict(self)
+
+
+@dataclass(slots=True)
 class ModelBenchmark:
     model_name: str
     feature_config: str
@@ -90,6 +103,25 @@ class RankedCombination:
 
 
 @dataclass(slots=True)
+class CombinationWeightProfile:
+    name: str
+    ml_weight: float
+    frequency_weight: float
+    rule_weight: float
+    frequency_window: int
+
+    def to_dict(self) -> dict[str, object]:
+        return asdict(self)
+
+
+@dataclass(slots=True)
+class CombinationReplayStep:
+    history_records: Sequence[DrawRecord]
+    actual_record: DrawRecord
+    position_probabilities: list[list[PositionProbability]]
+
+
+@dataclass(slots=True)
 class BenchmarkSelectionResult:
     lottery_type: str
     feature_config: FeatureConfig
@@ -99,7 +131,9 @@ class BenchmarkSelectionResult:
     position_probabilities: list[list[PositionProbability]]
     rule_profile: RuleProfile
     ranked_combinations: list[RankedCombination]
+    combination_profile: CombinationWeightProfile
     best_metrics: BenchmarkMetrics
+    combo_backtest: CombinationBacktestMetrics
 
     def to_dict(self) -> dict[str, object]:
         return {
@@ -109,12 +143,14 @@ class BenchmarkSelectionResult:
             "holdout_size": self.holdout_size,
             "benchmarks": [benchmark.to_dict() for benchmark in self.benchmarks],
             "best_metrics": self.best_metrics.to_dict(),
+            "combo_backtest": self.combo_backtest.to_dict(),
             "position_probabilities": [
                 [item.to_dict() for item in position_items]
                 for position_items in self.position_probabilities
             ],
             "rule_profile": self.rule_profile.to_dict(),
             "ranked_combinations": [item.to_dict() for item in self.ranked_combinations],
+            "combination_profile": self.combination_profile.to_dict(),
         }
 
 
@@ -128,8 +164,9 @@ def run_benchmark_selection(
     best_choice: tuple[FeatureConfig, str, BenchmarkMetrics] | None = None
 
     for feature_config in feature_configs:
+        feature_records = _truncate_records_for_features(records, feature_config, max_samples=MAX_BENCHMARK_SAMPLES)
         dataset = build_supervised_dataset(
-            _truncate_records_for_features(records, feature_config, max_samples=MAX_BENCHMARK_SAMPLES),
+            feature_records,
             lottery_type,
             feature_config,
         )
@@ -153,22 +190,38 @@ def run_benchmark_selection(
 
     assert best_choice is not None
     best_feature_config, best_model_name, best_metrics = best_choice
+    best_records = _truncate_records_for_features(records, best_feature_config, max_samples=MAX_BENCHMARK_SAMPLES)
     best_dataset = build_supervised_dataset(
-        _truncate_records_for_features(records, best_feature_config, max_samples=MAX_BENCHMARK_SAMPLES),
+        best_records,
         lottery_type,
         best_feature_config,
     )
     holdout_size = _determine_holdout_size(len(best_dataset.X))
-    next_row, _ = build_next_feature_row(records, lottery_type, best_feature_config)
+    train_X = best_dataset.X[:-holdout_size]
+    train_y = best_dataset.y[:-holdout_size]
     trained_models = _fit_position_models(
         model_name=best_model_name,
-        X=best_dataset.X,
-        y=best_dataset.y,
+        X=train_X,
+        y=train_y,
     )
+
+    next_row, _ = build_next_feature_row(records, lottery_type, best_feature_config)
     position_probabilities = _predict_position_probabilities(
         trained_models=trained_models,
         feature_row=next_row.reshape(1, -1),
         digit_count=digit_count,
+    )
+    replay_steps = _build_combination_replay_steps(
+        records=best_records,
+        lottery_type=lottery_type,
+        feature_config=best_feature_config,
+        dataset=best_dataset,
+        trained_models=trained_models,
+        holdout_size=holdout_size,
+    )
+    combination_profile, combo_backtest = _select_combination_profile(
+        lottery_type=lottery_type,
+        replay_steps=replay_steps,
     )
     rule_profile = build_rule_profile(records, digit_count=digit_count)
     ranked_combinations = rank_combinations(
@@ -176,6 +229,7 @@ def run_benchmark_selection(
         lottery_type=lottery_type,
         position_probabilities=position_probabilities,
         rule_profile=rule_profile,
+        combination_profile=combination_profile,
     )
     return BenchmarkSelectionResult(
         lottery_type=lottery_type,
@@ -194,13 +248,15 @@ def run_benchmark_selection(
         position_probabilities=position_probabilities,
         rule_profile=rule_profile,
         ranked_combinations=ranked_combinations,
+        combination_profile=combination_profile,
         best_metrics=best_metrics,
+        combo_backtest=combo_backtest,
     )
 
 
 def build_rule_profile(records: Sequence[DrawRecord], digit_count: int) -> RuleProfile:
-    recent_window = 40
-    sum_tail_window = 120
+    recent_window = 60
+    sum_tail_window = 180
     recent_records = records[-recent_window:]
     tail_records = records[-sum_tail_window:]
 
@@ -234,10 +290,12 @@ def rank_combinations(
     lottery_type: str,
     position_probabilities: list[list[PositionProbability]],
     rule_profile: RuleProfile,
+    combination_profile: CombinationWeightProfile | None = None,
 ) -> list[RankedCombination]:
     digit_count = int(LOTTERY_CONFIG[lottery_type]["digit_count"])
     top_k_per_position = 4 if digit_count == 3 else 3
-    recent_window = min(120, len(records))
+    profile = combination_profile or _candidate_combination_profiles(lottery_type)[0]
+    recent_window = min(profile.frequency_window, len(records))
     recent_records = records[-recent_window:]
     frequency_lookup = _build_frequency_lookup(recent_records, digit_count)
     latest_digits = records[-1].digits[:digit_count]
@@ -256,7 +314,12 @@ def rank_combinations(
 
         rule_score, explanation = _score_rules(digits, latest_digits, rule_profile)
         ml_component = exp(sum(log(max(item.probability, 1e-8)) for item in group) / digit_count)
-        combined_score = round((0.6 * ml_component) + (0.25 * frequency_score) + (0.15 * rule_score), 6)
+        combined_score = round(
+            (profile.ml_weight * ml_component)
+            + (profile.frequency_weight * frequency_score)
+            + (profile.rule_weight * rule_score),
+            6,
+        )
         combinations.append(
             RankedCombination(
                 number=number,
@@ -337,6 +400,159 @@ def _predict_position_probabilities(
         items.sort(key=lambda item: (-item.probability, item.digit))
         probabilities.append(items)
     return probabilities
+
+
+def _build_combination_replay_steps(
+    records: Sequence[DrawRecord],
+    lottery_type: str,
+    feature_config: FeatureConfig,
+    dataset: SupervisedDataset,
+    trained_models: Sequence[object],
+    holdout_size: int,
+) -> list[CombinationReplayStep]:
+    digit_count = int(LOTTERY_CONFIG[lottery_type]["digit_count"])
+    min_history = max(feature_config.lag_depth, max(feature_config.rolling_windows))
+    holdout_start_row = len(dataset.X) - holdout_size
+    holdout_start_record_index = min_history + holdout_start_row
+    replay_steps: list[CombinationReplayStep] = []
+
+    for offset in range(holdout_size):
+        row_index = holdout_start_row + offset
+        target_record_index = holdout_start_record_index + offset
+        history_records = records[:target_record_index]
+        actual_record = records[target_record_index]
+        position_probabilities = _predict_position_probabilities(
+            trained_models=trained_models,
+            feature_row=dataset.X[row_index].reshape(1, -1),
+            digit_count=digit_count,
+        )
+        replay_steps.append(
+            CombinationReplayStep(
+                history_records=history_records,
+                actual_record=actual_record,
+                position_probabilities=position_probabilities,
+            )
+        )
+
+    return replay_steps
+
+
+def _evaluate_combination_backtest(
+    lottery_type: str,
+    replay_steps: Sequence[CombinationReplayStep],
+    combination_profile: CombinationWeightProfile,
+) -> CombinationBacktestMetrics:
+    top1_hits = 0
+    top5_hits = 0
+    top10_hits = 0
+    top1_overlaps: list[float] = []
+    top1_any_hits = 0
+
+    for step in replay_steps:
+        digit_count = len(step.actual_record.digits)
+        rule_profile = build_rule_profile(step.history_records, digit_count=digit_count)
+        ranked = rank_combinations(
+            records=step.history_records,
+            lottery_type=lottery_type,
+            position_probabilities=step.position_probabilities,
+            rule_profile=rule_profile,
+            combination_profile=combination_profile,
+        )
+        actual_number = step.actual_record.number
+        ranked_numbers = [item.number for item in ranked]
+        top1_number = ranked_numbers[0]
+
+        if actual_number == top1_number:
+            top1_hits += 1
+        if actual_number in ranked_numbers[:5]:
+            top5_hits += 1
+        if actual_number in ranked_numbers[:10]:
+            top10_hits += 1
+
+        top1_digits = [int(char) for char in top1_number]
+        overlap = _digit_overlap_score(step.actual_record.digits[:digit_count], top1_digits)
+        top1_overlaps.append(overlap)
+        if overlap > 0:
+            top1_any_hits += 1
+
+    sample_count = len(replay_steps)
+    return CombinationBacktestMetrics(
+        sample_count=sample_count,
+        top1_exact_rate=round(top1_hits / sample_count, 6),
+        top5_exact_rate=round(top5_hits / sample_count, 6),
+        top10_exact_rate=round(top10_hits / sample_count, 6),
+        top1_mean_digit_overlap=round(float(np.mean(top1_overlaps)), 6),
+        top1_at_least_one_hit_rate=round(top1_any_hits / sample_count, 6),
+    )
+
+
+def _select_combination_profile(
+    lottery_type: str,
+    replay_steps: Sequence[CombinationReplayStep],
+) -> tuple[CombinationWeightProfile, CombinationBacktestMetrics]:
+    best_profile: CombinationWeightProfile | None = None
+    best_metrics: CombinationBacktestMetrics | None = None
+
+    for profile in _candidate_combination_profiles(lottery_type):
+        metrics = _evaluate_combination_backtest(
+            lottery_type=lottery_type,
+            replay_steps=replay_steps,
+            combination_profile=profile,
+        )
+        if best_profile is None or _is_better_combo_metrics(metrics, profile, best_metrics, best_profile):
+            best_profile = profile
+            best_metrics = metrics
+
+    assert best_profile is not None
+    assert best_metrics is not None
+    return best_profile, best_metrics
+
+
+def _candidate_combination_profiles(lottery_type: str) -> list[CombinationWeightProfile]:
+    if lottery_type == "p3":
+        return [
+            CombinationWeightProfile("ml76_freq18_rule06_w120", 0.76, 0.18, 0.06, 120),
+            CombinationWeightProfile("ml82_freq14_rule04_w90", 0.82, 0.14, 0.04, 90),
+            CombinationWeightProfile("ml74_freq22_rule04_w90", 0.74, 0.22, 0.04, 90),
+            CombinationWeightProfile("ml78_freq18_rule04_w60", 0.78, 0.18, 0.04, 60),
+            CombinationWeightProfile("ml70_freq24_rule06_w120", 0.70, 0.24, 0.06, 120),
+        ]
+    return [
+        CombinationWeightProfile("ml82_freq14_rule04_w120", 0.82, 0.14, 0.04, 120),
+        CombinationWeightProfile("ml86_freq10_rule04_w90", 0.86, 0.10, 0.04, 90),
+        CombinationWeightProfile("ml80_freq18_rule02_w90", 0.80, 0.18, 0.02, 90),
+        CombinationWeightProfile("ml78_freq20_rule02_w120", 0.78, 0.20, 0.02, 120),
+        CombinationWeightProfile("ml84_freq14_rule02_w60", 0.84, 0.14, 0.02, 60),
+    ]
+
+
+def _is_better_combo_metrics(
+    candidate_metrics: CombinationBacktestMetrics,
+    candidate_profile: CombinationWeightProfile,
+    current_metrics: CombinationBacktestMetrics | None,
+    current_profile: CombinationWeightProfile | None,
+) -> bool:
+    if current_metrics is None or current_profile is None:
+        return True
+    candidate_key = (
+        candidate_metrics.top5_exact_rate,
+        candidate_metrics.top10_exact_rate,
+        candidate_metrics.top1_exact_rate,
+        candidate_metrics.top1_mean_digit_overlap,
+        candidate_metrics.top1_at_least_one_hit_rate,
+        -candidate_profile.rule_weight,
+        candidate_profile.ml_weight,
+    )
+    current_key = (
+        current_metrics.top5_exact_rate,
+        current_metrics.top10_exact_rate,
+        current_metrics.top1_exact_rate,
+        current_metrics.top1_mean_digit_overlap,
+        current_metrics.top1_at_least_one_hit_rate,
+        -current_profile.rule_weight,
+        current_profile.ml_weight,
+    )
+    return candidate_key > current_key
 
 
 def _compute_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> BenchmarkMetrics:
@@ -450,25 +666,25 @@ def _score_rules(
     sum_tail = sum(digits) % 10
 
     if any(digit in rule_profile.danma_digits for digit in digits):
-        score += 0.2
+        score += 0.1
         explanation.append("包含胆码趋势数字")
     if any(digit in rule_profile.dudan_digits for digit in digits):
-        score -= 0.18
+        score -= 0.08
         explanation.append("包含低频独胆数字")
     if sum_tail in rule_profile.preferred_sum_tails:
-        score += 0.14
+        score += 0.07
         explanation.append("和值尾数匹配近期强势区间")
     if sum_tail in rule_profile.filtered_sum_tails:
-        score -= 0.14
+        score -= 0.07
         explanation.append("和值尾数落入近期弱势区间")
 
     same_position_hits = sum(int(left == right) for left, right in zip(digits, latest_digits))
     if same_position_hits >= max(2, len(digits) - 1):
-        score -= 0.1
-        explanation.append("与最新开奖号码位次重复过多")
+        score -= 0.06
+        explanation.append("与最新开奖号位置重复过多")
     elif same_position_hits == 0:
-        score += 0.05
-        explanation.append("与最新开奖号码形成错位分散")
+        score += 0.03
+        explanation.append("与最新开奖号形成错位分散")
 
     return min(1.0, max(0.0, score)), explanation
 

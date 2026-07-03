@@ -1,6 +1,6 @@
 {
   "lottery_type": "p5",
-  "updated_at": "2026-07-02T15:33:01Z",
+  "updated_at": "2026-07-03T15:03:29Z",
   "records": [
     {
       "lottery_type": "p5",
@@ -114601,6 +114601,21 @@
       ],
       "number": "25975",
       "detail_url": "https://pdf.sporttery.cn/28300/26173/26173.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26174",
+      "draw_date": "2026-07-03",
+      "digits": [
+        1,
+        5,
+        7,
+        6,
+        6
+      ],
+      "number": "15766",
+      "detail_url": "https://pdf.sporttery.cn/28300/26174/26174.pdf"
     }
   ]
 }

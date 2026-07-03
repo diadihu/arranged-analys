@@ -31,11 +31,15 @@ function formatPercent(value) {
   return `${(value * 100).toFixed(2)}%`;
 }
 
-function formatMetricLabel(label, value) {
-  if (label === "平均命中位数") {
-    return value.toFixed(3);
+function formatDecimal(value, digits = 3) {
+  return value.toFixed(digits);
+}
+
+function formatMetricValue(kind, value) {
+  if (kind === "percent") {
+    return formatPercent(value);
   }
-  return formatPercent(value);
+  return formatDecimal(value);
 }
 
 function getPrediction() {
@@ -54,43 +58,49 @@ function getBestBenchmark() {
 function renderSummary() {
   const summary = state.summary.lotteries[state.currentType];
   const prediction = getPrediction();
+  const ruleProfile = prediction.rule_profile;
 
   document.getElementById("latest-issue").textContent = summary.latest_issue;
   document.getElementById("latest-number").textContent = summary.latest_number;
   document.getElementById("records-count").textContent = summary.records_count.toLocaleString("zh-CN");
   document.getElementById("baseline-prediction").textContent = prediction.baseline_prediction;
   document.getElementById("best-combo-number").textContent = prediction.best_combo.number;
-  document.getElementById("best-combo-score").textContent = `综合得分 ${prediction.best_combo.combined_score.toFixed(6)}`;
+  document.getElementById("best-combo-score").textContent =
+    `综合得分 ${prediction.best_combo.combined_score.toFixed(6)} / 权重 ${prediction.combination_profile.name}`;
   document.getElementById("best-model-name").textContent = prediction.best_model_name;
   document.getElementById("best-model-config").textContent = prediction.best_feature_config;
-  document.getElementById("holdout-chip").textContent = `回测窗口 ${prediction.holdout_size} 期`;
+  document.getElementById("holdout-chip").textContent = `留后回测窗口 ${prediction.holdout_size} 期`;
   document.getElementById("prediction-disclaimer").textContent = prediction.disclaimer;
-
-  const ruleProfile = prediction.rule_profile;
   document.getElementById("rule-profile-chip").textContent =
-    `胆码 ${ruleProfile.danma_digits.join("")} / 独胆 ${ruleProfile.dudan_digits.join("")}`;
+    `胆码 ${ruleProfile.danma_digits.join("") || "-"} / 独胆 ${ruleProfile.dudan_digits.join("") || "-"} / 频次窗 ${prediction.combination_profile.frequency_window}`;
 }
 
 function renderMetrics() {
   const prediction = getPrediction();
   const bestBenchmark = getBestBenchmark();
+  const comboBacktest = prediction.combo_backtest;
   const container = document.getElementById("metrics-grid");
   container.innerHTML = "";
 
   const metricEntries = [
-    ["平均命中位数", prediction.holdout_metrics.mean_position_hits],
-    ["位置命中率", prediction.holdout_metrics.position_accuracy],
-    ["整组命中率", prediction.holdout_metrics.exact_match_rate],
-    ["数字重叠率", prediction.holdout_metrics.mean_digit_overlap],
-    ["至少 1 位命中率", prediction.holdout_metrics.at_least_one_hit_rate],
+    ["位置平均命中数", prediction.holdout_metrics.mean_position_hits, "number"],
+    ["位置命中率", prediction.holdout_metrics.position_accuracy, "percent"],
+    ["整组命中率", prediction.holdout_metrics.exact_match_rate, "percent"],
+    ["数字重叠率", prediction.holdout_metrics.mean_digit_overlap, "percent"],
+    ["至少 1 位命中率", prediction.holdout_metrics.at_least_one_hit_rate, "percent"],
+    ["组合 Top1 命中率", comboBacktest.top1_exact_rate, "percent"],
+    ["组合 Top5 覆盖率", comboBacktest.top5_exact_rate, "percent"],
+    ["组合 Top10 覆盖率", comboBacktest.top10_exact_rate, "percent"],
+    ["组合 Top1 平均重叠", comboBacktest.top1_mean_digit_overlap, "number"],
+    ["组合 Top1 至少一位命中率", comboBacktest.top1_at_least_one_hit_rate, "percent"],
   ];
 
-  metricEntries.forEach(([label, value]) => {
+  metricEntries.forEach(([label, value, kind]) => {
     const card = document.createElement("article");
     card.className = "metric-box";
     card.innerHTML = `
       <span>${label}</span>
-      <strong>${formatMetricLabel(label, value)}</strong>
+      <strong>${formatMetricValue(kind, value)}</strong>
     `;
     container.appendChild(card);
   });
@@ -100,11 +110,20 @@ function renderMetrics() {
     cvCard.className = "metric-box";
     cvCard.innerHTML = `
       <span>CV 平均命中位数</span>
-      <strong>${bestBenchmark.cv_metrics.mean_position_hits.toFixed(3)}</strong>
+      <strong>${formatDecimal(bestBenchmark.cv_metrics.mean_position_hits)}</strong>
       <small>${prediction.best_feature_config}</small>
     `;
     container.appendChild(cvCard);
   }
+
+  const sampleCard = document.createElement("article");
+  sampleCard.className = "metric-box";
+  sampleCard.innerHTML = `
+    <span>组合回放样本数</span>
+    <strong>${comboBacktest.sample_count}</strong>
+    <small>使用留后窗口逐期回放</small>
+  `;
+  container.appendChild(sampleCard);
 }
 
 function renderCandidates() {
@@ -183,8 +202,8 @@ function renderBenchmarkTable() {
     tr.innerHTML = `
       <td>${benchmark.model_name}</td>
       <td>${benchmark.feature_config}</td>
-      <td>${benchmark.cv_metrics.mean_position_hits.toFixed(3)}</td>
-      <td>${benchmark.holdout_metrics.mean_position_hits.toFixed(3)}</td>
+      <td>${formatDecimal(benchmark.cv_metrics.mean_position_hits)}</td>
+      <td>${formatDecimal(benchmark.holdout_metrics.mean_position_hits)}</td>
       <td>${formatPercent(benchmark.holdout_metrics.exact_match_rate)}</td>
       <td>${formatPercent(benchmark.holdout_metrics.mean_digit_overlap)}</td>
       <td>${formatPercent(benchmark.holdout_metrics.at_least_one_hit_rate)}</td>

@@ -23,6 +23,20 @@ def write_json(file_path: Path, payload: object) -> None:
     file_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+def load_history_records(csv_path: Path, lottery_type: str) -> list:
+    existing_records = read_history_csv(csv_path)
+    try:
+        return fetch_history(lottery_type, existing_records=existing_records)
+    except Exception as error:
+        if existing_records:
+            print(
+                f"[warn] failed to fetch latest {lottery_type} history, using cached csv instead: {error}",
+                file=sys.stderr,
+            )
+            return existing_records
+        raise
+
+
 def build_site_data() -> None:
     updated_at = updated_at_iso()
     all_predictions: dict[str, object] = {}
@@ -31,8 +45,7 @@ def build_site_data() -> None:
 
     for lottery_type in ("p3", "p5"):
         csv_path = DATA_RAW_DIR / f"{lottery_type}_history.csv"
-        existing_records = read_history_csv(csv_path)
-        records = fetch_history(lottery_type, existing_records=existing_records)
+        records = load_history_records(csv_path, lottery_type)
         prediction, benchmark_result = build_advanced_prediction(records, lottery_type=lottery_type)
         latest = records[-1]
 

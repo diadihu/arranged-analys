@@ -20,6 +20,8 @@ class AdvancedPredictionResult:
     holdout_size: int
     best_combo: dict[str, object]
     holdout_metrics: dict[str, float]
+    combo_backtest: dict[str, float | int]
+    combination_profile: dict[str, object]
     positional_candidates: list[list[dict[str, float | int]]]
     recommended_combinations: list[dict[str, object]]
     rule_profile: dict[str, list[int]]
@@ -55,10 +57,12 @@ def build_advanced_prediction(
         holdout_size=benchmark_result.holdout_size,
         best_combo=best_combo.to_dict(),
         holdout_metrics=benchmark_result.best_metrics.to_dict(),
+        combo_backtest=benchmark_result.combo_backtest.to_dict(),
+        combination_profile=benchmark_result.combination_profile.to_dict(),
         positional_candidates=positional_candidates,
         recommended_combinations=[item.to_dict() for item in benchmark_result.ranked_combinations],
         rule_profile=benchmark_result.rule_profile.to_dict(),
         benchmark_table=[item.to_dict() for item in benchmark_result.benchmarks],
-        disclaimer="结果基于历史开奖统计、时序交叉验证与回测排序，仅作数据实验参考。",
+        disclaimer="结果基于历史开奖统计、时序交叉验证、位置级回测与组合级回放，仅作数据实验参考。",
     )
     return result, benchmark_result
