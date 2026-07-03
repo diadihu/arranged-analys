@@ -751,7 +751,7 @@
           "mean_position_hits": 0.494444,
           "position_accuracy": 0.098889,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.321111,
+          "mean_digit_overlap": 0.322222,
           "at_least_one_hit_rate": 0.4
         },
         "holdout_metrics": {
