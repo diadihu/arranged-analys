@@ -269,7 +269,7 @@
           "mean_position_hits": 0.261111,
           "position_accuracy": 0.087037,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.227778,
+          "mean_digit_overlap": 0.22963,
           "at_least_one_hit_rate": 0.227778
         },
         "holdout_metrics": {
