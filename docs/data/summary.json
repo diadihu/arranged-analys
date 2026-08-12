@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-11T15:27:16Z",
+  "updated_at": "2026-08-12T15:27:09Z",
   "data_source": {
     "name": "中国体彩网官方高速 JSON 接口",
     "history_api": "https://webapi.sporttery.cn/gateway/lottery/getHistoryPageListV1.qry",
