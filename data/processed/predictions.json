@@ -269,7 +269,7 @@
           "mean_position_hits": 0.261111,
           "position_accuracy": 0.087037,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.227778,
+          "mean_digit_overlap": 0.22963,
           "at_least_one_hit_rate": 0.227778
         },
         "holdout_metrics": {
@@ -767,11 +767,11 @@
         "model_name": "random_forest",
         "feature_config": "lag10_win5_10_20_30",
         "cv_metrics": {
-          "mean_position_hits": 0.472222,
-          "position_accuracy": 0.094445,
+          "mean_position_hits": 0.477778,
+          "position_accuracy": 0.095556,
           "exact_match_rate": 0.0,
           "mean_digit_overlap": 0.344444,
-          "at_least_one_hit_rate": 0.394445
+          "at_least_one_hit_rate": 0.4
         },
         "holdout_metrics": {
           "mean_position_hits": 0.533333,
