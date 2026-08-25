@@ -729,11 +729,11 @@
         "model_name": "extra_trees",
         "feature_config": "lag10_win5_10_20_30",
         "cv_metrics": {
-          "mean_position_hits": 0.5,
-          "position_accuracy": 0.1,
+          "mean_position_hits": 0.505556,
+          "position_accuracy": 0.101111,
           "exact_match_rate": 0.0,
           "mean_digit_overlap": 0.347778,
-          "at_least_one_hit_rate": 0.377778
+          "at_least_one_hit_rate": 0.383333
         },
         "holdout_metrics": {
           "mean_position_hits": 0.583333,
