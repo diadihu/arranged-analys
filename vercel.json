@@ -1,8 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "",
-  "buildCommand": "",
-  "outputDirectory": "docs",
+  "buildCommand": "npm run vercel-build",
+  "outputDirectory": "dist",
   "regions": ["hkg1"],
   "functions": {
     "api/sporttery.js": {
