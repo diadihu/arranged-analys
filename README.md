@@ -113,7 +113,7 @@ python -m http.server 8000 --directory .\docs
 .\scripts\sync-and-publish.ps1 -CheckOnly
 ```
 
-云端工作流 `.github/workflows/update-data.yml` 保留为手动网络诊断，不再定时运行，避免每天产生已知的 `HTTP 567` 失败记录。实际定时任务在北京时间 21:47、23:17 和次日 06:17 从本机执行上述脚本，以吸收开奖发布时间和网络波动。
+云端工作流 `.github/workflows/update-data.yml` 保留为手动网络诊断，不再定时运行，避免每天产生已知的 `HTTP 567` 失败记录。实际定时任务在北京时间 21:47、23:47 和次日 06:47 从本机执行上述脚本，以吸收开奖发布时间和网络波动。
 
 同步逻辑具备以下保护：
 
