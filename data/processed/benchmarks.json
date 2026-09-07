@@ -2,53 +2,71 @@
   "p3": {
     "lottery_type": "p3",
     "feature_config": {
-      "name": "lag10_win5_10_20_30",
-      "lag_depth": 10,
+      "name": "lag6_win5_10_20",
+      "lag_depth": 6,
       "rolling_windows": [
         5,
         10,
-        20,
-        30
+        20
       ]
     },
-    "best_model_name": "logreg",
+    "best_model_name": "random_forest",
     "holdout_size": 120,
     "benchmarks": [
       {
-        "model_name": "logreg",
-        "feature_config": "lag10_win5_10_20_30",
+        "model_name": "random_forest",
+        "feature_config": "lag6_win5_10_20",
         "cv_metrics": {
-          "mean_position_hits": 0.333333,
-          "position_accuracy": 0.111111,
+          "mean_position_hits": 0.238889,
+          "position_accuracy": 0.07963,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.25,
-          "at_least_one_hit_rate": 0.322222
+          "mean_digit_overlap": 0.268518,
+          "at_least_one_hit_rate": 0.222222
         },
         "holdout_metrics": {
-          "mean_position_hits": 0.325,
-          "position_accuracy": 0.108333,
+          "mean_position_hits": 0.35,
+          "position_accuracy": 0.116667,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.302778,
-          "at_least_one_hit_rate": 0.275
+          "mean_digit_overlap": 0.266667,
+          "at_least_one_hit_rate": 0.3
         },
         "holdout_size": 120
       },
       {
         "model_name": "random_forest",
-        "feature_config": "lag6_win5_10_20",
+        "feature_config": "lag10_win5_10_20_30",
         "cv_metrics": {
-          "mean_position_hits": 0.355556,
-          "position_accuracy": 0.118519,
+          "mean_position_hits": 0.294444,
+          "position_accuracy": 0.098148,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.296296,
-          "at_least_one_hit_rate": 0.322222
+          "mean_digit_overlap": 0.257407,
+          "at_least_one_hit_rate": 0.261111
         },
         "holdout_metrics": {
-          "mean_position_hits": 0.325,
-          "position_accuracy": 0.108333,
+          "mean_position_hits": 0.341667,
+          "position_accuracy": 0.113889,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.258333,
-          "at_least_one_hit_rate": 0.283333
+          "mean_digit_overlap": 0.280556,
+          "at_least_one_hit_rate": 0.3
+        },
+        "holdout_size": 120
+      },
+      {
+        "model_name": "logreg",
+        "feature_config": "lag10_win5_10_20_30",
+        "cv_metrics": {
+          "mean_position_hits": 0.305555,
+          "position_accuracy": 0.101852,
+          "exact_match_rate": 0.0,
+          "mean_digit_overlap": 0.25,
+          "at_least_one_hit_rate": 0.3
+        },
+        "holdout_metrics": {
+          "mean_position_hits": 0.333333,
+          "position_accuracy": 0.111111,
+          "exact_match_rate": 0.0,
+          "mean_digit_overlap": 0.291667,
+          "at_least_one_hit_rate": 0.3
         },
         "holdout_size": 120
       },
@@ -56,56 +74,18 @@
         "model_name": "knn",
         "feature_config": "lag10_win5_10_20_30",
         "cv_metrics": {
-          "mean_position_hits": 0.288889,
-          "position_accuracy": 0.096296,
-          "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.242593,
-          "at_least_one_hit_rate": 0.277778
-        },
-        "holdout_metrics": {
-          "mean_position_hits": 0.316667,
-          "position_accuracy": 0.105556,
-          "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.247222,
-          "at_least_one_hit_rate": 0.275
-        },
-        "holdout_size": 120
-      },
-      {
-        "model_name": "extra_trees",
-        "feature_config": "lag10_win5_10_20_30",
-        "cv_metrics": {
-          "mean_position_hits": 0.311111,
-          "position_accuracy": 0.103703,
-          "exact_match_rate": 0.005556,
-          "mean_digit_overlap": 0.259259,
-          "at_least_one_hit_rate": 0.283334
-        },
-        "holdout_metrics": {
-          "mean_position_hits": 0.283333,
-          "position_accuracy": 0.094444,
-          "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.225,
-          "at_least_one_hit_rate": 0.266667
-        },
-        "holdout_size": 120
-      },
-      {
-        "model_name": "random_forest",
-        "feature_config": "lag10_win5_10_20_30",
-        "cv_metrics": {
-          "mean_position_hits": 0.316667,
-          "position_accuracy": 0.105556,
-          "exact_match_rate": 0.005556,
-          "mean_digit_overlap": 0.242592,
-          "at_least_one_hit_rate": 0.266667
-        },
-        "holdout_metrics": {
           "mean_position_hits": 0.266667,
           "position_accuracy": 0.088889,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.247222,
-          "at_least_one_hit_rate": 0.241667
+          "mean_digit_overlap": 0.240741,
+          "at_least_one_hit_rate": 0.255556
+        },
+        "holdout_metrics": {
+          "mean_position_hits": 0.316667,
+          "position_accuracy": 0.105556,
+          "exact_match_rate": 0.0,
+          "mean_digit_overlap": 0.25,
+          "at_least_one_hit_rate": 0.275
         },
         "holdout_size": 120
       },
@@ -113,37 +93,18 @@
         "model_name": "extra_trees",
         "feature_config": "lag6_win5_10_20",
         "cv_metrics": {
-          "mean_position_hits": 0.316667,
-          "position_accuracy": 0.105556,
+          "mean_position_hits": 0.338889,
+          "position_accuracy": 0.112963,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.248148,
-          "at_least_one_hit_rate": 0.294445
+          "mean_digit_overlap": 0.244444,
+          "at_least_one_hit_rate": 0.305555
         },
         "holdout_metrics": {
           "mean_position_hits": 0.258333,
           "position_accuracy": 0.086111,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.225,
-          "at_least_one_hit_rate": 0.225
-        },
-        "holdout_size": 120
-      },
-      {
-        "model_name": "logreg",
-        "feature_config": "lag6_win5_10_20",
-        "cv_metrics": {
-          "mean_position_hits": 0.305556,
-          "position_accuracy": 0.101852,
-          "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.233333,
-          "at_least_one_hit_rate": 0.3
-        },
-        "holdout_metrics": {
-          "mean_position_hits": 0.25,
-          "position_accuracy": 0.083333,
-          "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.283333,
-          "at_least_one_hit_rate": 0.2
+          "mean_digit_overlap": 0.241667,
+          "at_least_one_hit_rate": 0.233333
         },
         "holdout_size": 120
       },
@@ -151,162 +112,200 @@
         "model_name": "knn",
         "feature_config": "lag6_win5_10_20",
         "cv_metrics": {
-          "mean_position_hits": 0.283334,
-          "position_accuracy": 0.094445,
+          "mean_position_hits": 0.294445,
+          "position_accuracy": 0.098148,
+          "exact_match_rate": 0.005556,
+          "mean_digit_overlap": 0.233333,
+          "at_least_one_hit_rate": 0.272222
+        },
+        "holdout_metrics": {
+          "mean_position_hits": 0.258333,
+          "position_accuracy": 0.086111,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.225926,
-          "at_least_one_hit_rate": 0.266667
+          "mean_digit_overlap": 0.238889,
+          "at_least_one_hit_rate": 0.25
+        },
+        "holdout_size": 120
+      },
+      {
+        "model_name": "logreg",
+        "feature_config": "lag6_win5_10_20",
+        "cv_metrics": {
+          "mean_position_hits": 0.3,
+          "position_accuracy": 0.1,
+          "exact_match_rate": 0.0,
+          "mean_digit_overlap": 0.231482,
+          "at_least_one_hit_rate": 0.294444
         },
         "holdout_metrics": {
           "mean_position_hits": 0.25,
           "position_accuracy": 0.083333,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.236111,
-          "at_least_one_hit_rate": 0.241667
+          "mean_digit_overlap": 0.280556,
+          "at_least_one_hit_rate": 0.216667
+        },
+        "holdout_size": 120
+      },
+      {
+        "model_name": "extra_trees",
+        "feature_config": "lag10_win5_10_20_30",
+        "cv_metrics": {
+          "mean_position_hits": 0.35,
+          "position_accuracy": 0.116667,
+          "exact_match_rate": 0.0,
+          "mean_digit_overlap": 0.272222,
+          "at_least_one_hit_rate": 0.311111
+        },
+        "holdout_metrics": {
+          "mean_position_hits": 0.216667,
+          "position_accuracy": 0.072222,
+          "exact_match_rate": 0.0,
+          "mean_digit_overlap": 0.225,
+          "at_least_one_hit_rate": 0.191667
         },
         "holdout_size": 120
       }
     ],
     "best_metrics": {
-      "mean_position_hits": 0.325,
-      "position_accuracy": 0.108333,
+      "mean_position_hits": 0.35,
+      "position_accuracy": 0.116667,
       "exact_match_rate": 0.0,
-      "mean_digit_overlap": 0.302778,
-      "at_least_one_hit_rate": 0.275
+      "mean_digit_overlap": 0.266667,
+      "at_least_one_hit_rate": 0.3
     },
     "combo_backtest": {
       "sample_count": 120,
       "top1_exact_rate": 0.0,
       "top5_exact_rate": 0.008333,
-      "top10_exact_rate": 0.025,
-      "top1_mean_digit_overlap": 0.302778,
-      "top1_at_least_one_hit_rate": 0.683333
+      "top10_exact_rate": 0.008333,
+      "top1_mean_digit_overlap": 0.255556,
+      "top1_at_least_one_hit_rate": 0.625
     },
     "position_probabilities": [
       [
         {
-          "digit": 0,
-          "probability": 0.574754
-        },
-        {
-          "digit": 9,
-          "probability": 0.17526
-        },
-        {
-          "digit": 3,
-          "probability": 0.0956
-        },
-        {
-          "digit": 6,
-          "probability": 0.067682
-        },
-        {
           "digit": 5,
-          "probability": 0.053734
+          "probability": 0.175904
         },
         {
           "digit": 1,
-          "probability": 0.019753
-        },
-        {
-          "digit": 2,
-          "probability": 0.011216
+          "probability": 0.142047
         },
         {
           "digit": 4,
-          "probability": 0.001714
+          "probability": 0.121757
         },
         {
           "digit": 8,
-          "probability": 0.000167
+          "probability": 0.12148
+        },
+        {
+          "digit": 6,
+          "probability": 0.110385
+        },
+        {
+          "digit": 3,
+          "probability": 0.100505
+        },
+        {
+          "digit": 2,
+          "probability": 0.09605
+        },
+        {
+          "digit": 9,
+          "probability": 0.074989
+        },
+        {
+          "digit": 0,
+          "probability": 0.032713
         },
         {
           "digit": 7,
-          "probability": 0.000119
+          "probability": 0.02417
         }
       ],
       [
         {
-          "digit": 8,
-          "probability": 0.51428
-        },
-        {
           "digit": 7,
-          "probability": 0.432522
-        },
-        {
-          "digit": 0,
-          "probability": 0.046579
-        },
-        {
-          "digit": 9,
-          "probability": 0.005591
+          "probability": 0.193904
         },
         {
           "digit": 1,
-          "probability": 0.000462
-        },
-        {
-          "digit": 3,
-          "probability": 0.000376
-        },
-        {
-          "digit": 5,
-          "probability": 0.000158
-        },
-        {
-          "digit": 6,
-          "probability": 2.3e-05
-        },
-        {
-          "digit": 2,
-          "probability": 7e-06
+          "probability": 0.125947
         },
         {
           "digit": 4,
-          "probability": 2e-06
+          "probability": 0.125488
+        },
+        {
+          "digit": 6,
+          "probability": 0.098553
+        },
+        {
+          "digit": 2,
+          "probability": 0.097933
+        },
+        {
+          "digit": 9,
+          "probability": 0.092604
+        },
+        {
+          "digit": 5,
+          "probability": 0.074984
+        },
+        {
+          "digit": 0,
+          "probability": 0.073998
+        },
+        {
+          "digit": 8,
+          "probability": 0.058481
+        },
+        {
+          "digit": 3,
+          "probability": 0.058108
         }
       ],
       [
         {
-          "digit": 4,
-          "probability": 0.796171
-        },
-        {
-          "digit": 8,
-          "probability": 0.117787
-        },
-        {
           "digit": 9,
-          "probability": 0.064822
-        },
-        {
-          "digit": 7,
-          "probability": 0.012913
-        },
-        {
-          "digit": 2,
-          "probability": 0.005954
-        },
-        {
-          "digit": 5,
-          "probability": 0.001894
-        },
-        {
-          "digit": 1,
-          "probability": 0.000336
+          "probability": 0.20092
         },
         {
           "digit": 0,
-          "probability": 0.000107
+          "probability": 0.153341
+        },
+        {
+          "digit": 1,
+          "probability": 0.132047
         },
         {
           "digit": 3,
-          "probability": 1.6e-05
+          "probability": 0.103034
         },
         {
           "digit": 6,
-          "probability": 1e-06
+          "probability": 0.091643
+        },
+        {
+          "digit": 2,
+          "probability": 0.073288
+        },
+        {
+          "digit": 5,
+          "probability": 0.065397
+        },
+        {
+          "digit": 4,
+          "probability": 0.061591
+        },
+        {
+          "digit": 7,
+          "probability": 0.061484
+        },
+        {
+          "digit": 8,
+          "probability": 0.057255
         }
       ]
     ],
@@ -324,8 +323,8 @@
       "preferred_sum_tails": [
         0,
         4,
-        7,
-        1
+        1,
+        7
       ],
       "filtered_sum_tails": [
         2,
@@ -334,209 +333,222 @@
     },
     "ranked_combinations": [
       {
-        "number": "084",
-        "combined_score": 0.541019,
-        "ml_probability": 0.2353358,
-        "frequency_score": 0.111111,
-        "rule_score": 0.48,
+        "number": "579",
+        "combined_score": 0.196557,
+        "ml_probability": 0.00685308,
+        "frequency_score": 0.133333,
+        "rule_score": 0.61,
+        "explanation": [
+          "包含胆码趋势数字",
+          "和值尾数匹配近期强势区间",
+          "与最新开奖号位置重复过多"
+        ]
+      },
+      {
+        "number": "179",
+        "combined_score": 0.189367,
+        "ml_probability": 0.00553404,
+        "frequency_score": 0.15,
+        "rule_score": 0.61,
+        "explanation": [
+          "包含胆码趋势数字",
+          "和值尾数匹配近期强势区间",
+          "与最新开奖号位置重复过多"
+        ]
+      },
+      {
+        "number": "879",
+        "combined_score": 0.177158,
+        "ml_probability": 0.00473276,
+        "frequency_score": 0.138889,
+        "rule_score": 0.53,
         "explanation": [
           "包含胆码趋势数字",
           "包含低频独胆数字",
+          "和值尾数匹配近期强势区间",
+          "与最新开奖号位置重复过多"
+        ]
+      },
+      {
+        "number": "479",
+        "combined_score": 0.176258,
+        "ml_probability": 0.00474355,
+        "frequency_score": 0.133333,
+        "rule_score": 0.53,
+        "explanation": [
+          "包含胆码趋势数字",
+          "包含低频独胆数字",
+          "和值尾数匹配近期强势区间",
+          "与最新开奖号位置重复过多"
+        ]
+      },
+      {
+        "number": "570",
+        "combined_score": 0.176195,
+        "ml_probability": 0.00523023,
+        "frequency_score": 0.122222,
+        "rule_score": 0.47,
+        "explanation": [
+          "包含胆码趋势数字",
           "和值尾数落入近期弱势区间",
-          "与最新开奖号形成错位分散"
+          "与最新开奖号位置重复过多"
         ]
       },
       {
-        "number": "074",
-        "combined_score": 0.51651,
-        "ml_probability": 0.19792313,
-        "frequency_score": 0.107407,
-        "rule_score": 0.59,
+        "number": "170",
+        "combined_score": 0.175082,
+        "ml_probability": 0.00422354,
+        "frequency_score": 0.138889,
+        "rule_score": 0.6,
+        "explanation": [
+          "包含胆码趋势数字"
+        ]
+      },
+      {
+        "number": "571",
+        "combined_score": 0.172413,
+        "ml_probability": 0.00450392,
+        "frequency_score": 0.122222,
+        "rule_score": 0.54,
         "explanation": [
           "包含胆码趋势数字",
-          "包含低频独胆数字",
+          "与最新开奖号位置重复过多"
+        ]
+      },
+      {
+        "number": "519",
+        "combined_score": 0.170909,
+        "ml_probability": 0.0044513,
+        "frequency_score": 0.116667,
+        "rule_score": 0.54,
+        "explanation": [
+          "包含胆码趋势数字",
+          "与最新开奖号位置重复过多"
+        ]
+      },
+      {
+        "number": "119",
+        "combined_score": 0.170284,
+        "ml_probability": 0.00359454,
+        "frequency_score": 0.133333,
+        "rule_score": 0.67,
+        "explanation": [
+          "包含胆码趋势数字",
           "和值尾数匹配近期强势区间"
         ]
       },
       {
-        "number": "984",
-        "combined_score": 0.37763,
-        "ml_probability": 0.07176105,
-        "frequency_score": 0.114815,
-        "rule_score": 0.52,
+        "number": "569",
+        "combined_score": 0.166636,
+        "ml_probability": 0.00348312,
+        "frequency_score": 0.133333,
+        "rule_score": 0.61,
         "explanation": [
-          "包含低频独胆数字",
+          "包含胆码趋势数字",
           "和值尾数匹配近期强势区间",
-          "与最新开奖号形成错位分散"
+          "与最新开奖号位置重复过多"
         ]
       },
       {
-        "number": "974",
-        "combined_score": 0.360803,
-        "ml_probability": 0.06035279,
-        "frequency_score": 0.111111,
+        "number": "171",
+        "combined_score": 0.166153,
+        "ml_probability": 0.00363703,
+        "frequency_score": 0.138889,
+        "rule_score": 0.53,
+        "explanation": [
+          "包含胆码趋势数字",
+          "和值尾数落入近期弱势区间"
+        ]
+      },
+      {
+        "number": "470",
+        "combined_score": 0.165368,
+        "ml_probability": 0.00362025,
+        "frequency_score": 0.122222,
         "rule_score": 0.59,
         "explanation": [
           "包含胆码趋势数字",
           "包含低频独胆数字",
           "和值尾数匹配近期强势区间"
-        ]
-      },
-      {
-        "number": "384",
-        "combined_score": 0.312495,
-        "ml_probability": 0.03914388,
-        "frequency_score": 0.114815,
-        "rule_score": 0.45,
-        "explanation": [
-          "包含低频独胆数字",
-          "与最新开奖号形成错位分散"
-        ]
-      },
-      {
-        "number": "088",
-        "combined_score": 0.302201,
-        "ml_probability": 0.03481601,
-        "frequency_score": 0.088889,
-        "rule_score": 0.55,
-        "explanation": [
-          "包含胆码趋势数字",
-          "包含低频独胆数字",
-          "与最新开奖号形成错位分散"
-        ]
-      },
-      {
-        "number": "374",
-        "combined_score": 0.301963,
-        "ml_probability": 0.03292096,
-        "frequency_score": 0.111111,
-        "rule_score": 0.59,
-        "explanation": [
-          "包含胆码趋势数字",
-          "包含低频独胆数字",
-          "和值尾数匹配近期强势区间"
-        ]
-      },
-      {
-        "number": "078",
-        "combined_score": 0.285467,
-        "ml_probability": 0.02928111,
-        "frequency_score": 0.085185,
-        "rule_score": 0.52,
-        "explanation": [
-          "包含胆码趋势数字",
-          "包含低频独胆数字"
-        ]
-      },
-      {
-        "number": "684",
-        "combined_score": 0.283109,
-        "ml_probability": 0.02771272,
-        "frequency_score": 0.092593,
-        "rule_score": 0.55,
-        "explanation": [
-          "包含胆码趋势数字",
-          "包含低频独胆数字",
-          "与最新开奖号形成错位分散"
-        ]
-      },
-      {
-        "number": "674",
-        "combined_score": 0.270275,
-        "ml_probability": 0.02330707,
-        "frequency_score": 0.088889,
-        "rule_score": 0.59,
-        "explanation": [
-          "包含胆码趋势数字",
-          "包含低频独胆数字",
-          "和值尾数匹配近期强势区间"
-        ]
-      },
-      {
-        "number": "004",
-        "combined_score": 0.266675,
-        "ml_probability": 0.02131467,
-        "frequency_score": 0.103704,
-        "rule_score": 0.62,
-        "explanation": [
-          "包含胆码趋势数字",
-          "包含低频独胆数字",
-          "和值尾数匹配近期强势区间",
-          "与最新开奖号形成错位分散"
-        ]
-      },
-      {
-        "number": "089",
-        "combined_score": 0.261852,
-        "ml_probability": 0.01916038,
-        "frequency_score": 0.125926,
-        "rule_score": 0.62,
-        "explanation": [
-          "包含胆码趋势数字",
-          "包含低频独胆数字",
-          "和值尾数匹配近期强势区间",
-          "与最新开奖号形成错位分散"
         ]
       }
     ],
     "combination_profile": {
-      "name": "ml82_freq14_rule04_w90",
-      "ml_weight": 0.82,
-      "frequency_weight": 0.14,
+      "name": "ml78_freq18_rule04_w60",
+      "ml_weight": 0.78,
+      "frequency_weight": 0.18,
       "rule_weight": 0.04,
-      "frequency_window": 90
+      "frequency_window": 60
     }
   },
   "p5": {
     "lottery_type": "p5",
     "feature_config": {
-      "name": "lag10_win5_10_20_30",
-      "lag_depth": 10,
+      "name": "lag6_win5_10_20",
+      "lag_depth": 6,
       "rolling_windows": [
         5,
         10,
-        20,
-        30
+        20
       ]
     },
-    "best_model_name": "knn",
+    "best_model_name": "logreg",
     "holdout_size": 120,
     "benchmarks": [
       {
-        "model_name": "knn",
-        "feature_config": "lag10_win5_10_20_30",
+        "model_name": "logreg",
+        "feature_config": "lag6_win5_10_20",
         "cv_metrics": {
-          "mean_position_hits": 0.555556,
-          "position_accuracy": 0.111111,
+          "mean_position_hits": 0.5,
+          "position_accuracy": 0.1,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.353334,
-          "at_least_one_hit_rate": 0.461111
+          "mean_digit_overlap": 0.357778,
+          "at_least_one_hit_rate": 0.411111
         },
         "holdout_metrics": {
           "mean_position_hits": 0.575,
           "position_accuracy": 0.115,
           "exact_match_rate": 0.0,
           "mean_digit_overlap": 0.345,
-          "at_least_one_hit_rate": 0.483333
+          "at_least_one_hit_rate": 0.475
+        },
+        "holdout_size": 120
+      },
+      {
+        "model_name": "knn",
+        "feature_config": "lag10_win5_10_20_30",
+        "cv_metrics": {
+          "mean_position_hits": 0.544444,
+          "position_accuracy": 0.108889,
+          "exact_match_rate": 0.0,
+          "mean_digit_overlap": 0.346667,
+          "at_least_one_hit_rate": 0.444444
+        },
+        "holdout_metrics": {
+          "mean_position_hits": 0.533333,
+          "position_accuracy": 0.106667,
+          "exact_match_rate": 0.0,
+          "mean_digit_overlap": 0.343333,
+          "at_least_one_hit_rate": 0.466667
         },
         "holdout_size": 120
       },
       {
         "model_name": "logreg",
-        "feature_config": "lag6_win5_10_20",
+        "feature_config": "lag10_win5_10_20_30",
         "cv_metrics": {
-          "mean_position_hits": 0.522222,
-          "position_accuracy": 0.104445,
+          "mean_position_hits": 0.511111,
+          "position_accuracy": 0.102222,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.366667,
-          "at_least_one_hit_rate": 0.438889
+          "mean_digit_overlap": 0.365556,
+          "at_least_one_hit_rate": 0.433333
         },
         "holdout_metrics": {
-          "mean_position_hits": 0.558333,
-          "position_accuracy": 0.111667,
+          "mean_position_hits": 0.533333,
+          "position_accuracy": 0.106667,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.341667,
-          "at_least_one_hit_rate": 0.475
+          "mean_digit_overlap": 0.328333,
+          "at_least_one_hit_rate": 0.45
         },
         "holdout_size": 120
       },
@@ -544,37 +556,37 @@
         "model_name": "random_forest",
         "feature_config": "lag6_win5_10_20",
         "cv_metrics": {
-          "mean_position_hits": 0.505556,
-          "position_accuracy": 0.101111,
+          "mean_position_hits": 0.511111,
+          "position_accuracy": 0.102222,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.36,
-          "at_least_one_hit_rate": 0.394444
+          "mean_digit_overlap": 0.341111,
+          "at_least_one_hit_rate": 0.405555
         },
         "holdout_metrics": {
-          "mean_position_hits": 0.541667,
-          "position_accuracy": 0.108333,
+          "mean_position_hits": 0.508333,
+          "position_accuracy": 0.101667,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.36,
+          "mean_digit_overlap": 0.34,
           "at_least_one_hit_rate": 0.416667
         },
         "holdout_size": 120
       },
       {
-        "model_name": "logreg",
+        "model_name": "extra_trees",
         "feature_config": "lag10_win5_10_20_30",
         "cv_metrics": {
-          "mean_position_hits": 0.538889,
-          "position_accuracy": 0.107778,
+          "mean_position_hits": 0.566667,
+          "position_accuracy": 0.113333,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.371111,
-          "at_least_one_hit_rate": 0.455556
+          "mean_digit_overlap": 0.37,
+          "at_least_one_hit_rate": 0.433333
         },
         "holdout_metrics": {
-          "mean_position_hits": 0.541667,
-          "position_accuracy": 0.108333,
+          "mean_position_hits": 0.491667,
+          "position_accuracy": 0.098333,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.328333,
-          "at_least_one_hit_rate": 0.458333
+          "mean_digit_overlap": 0.336667,
+          "at_least_one_hit_rate": 0.375
         },
         "holdout_size": 120
       },
@@ -582,18 +594,18 @@
         "model_name": "knn",
         "feature_config": "lag6_win5_10_20",
         "cv_metrics": {
-          "mean_position_hits": 0.505556,
-          "position_accuracy": 0.101111,
+          "mean_position_hits": 0.527778,
+          "position_accuracy": 0.105556,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.336667,
-          "at_least_one_hit_rate": 0.411111
+          "mean_digit_overlap": 0.341111,
+          "at_least_one_hit_rate": 0.422222
         },
         "holdout_metrics": {
-          "mean_position_hits": 0.508333,
-          "position_accuracy": 0.101667,
+          "mean_position_hits": 0.491667,
+          "position_accuracy": 0.098333,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.335,
-          "at_least_one_hit_rate": 0.433333
+          "mean_digit_overlap": 0.336667,
+          "at_least_one_hit_rate": 0.416667
         },
         "holdout_size": 120
       },
@@ -601,36 +613,17 @@
         "model_name": "extra_trees",
         "feature_config": "lag6_win5_10_20",
         "cv_metrics": {
-          "mean_position_hits": 0.427778,
-          "position_accuracy": 0.085556,
+          "mean_position_hits": 0.566666,
+          "position_accuracy": 0.113334,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.332222,
-          "at_least_one_hit_rate": 0.383333
+          "mean_digit_overlap": 0.343333,
+          "at_least_one_hit_rate": 0.466667
         },
         "holdout_metrics": {
           "mean_position_hits": 0.475,
           "position_accuracy": 0.095,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.325,
-          "at_least_one_hit_rate": 0.391667
-        },
-        "holdout_size": 120
-      },
-      {
-        "model_name": "extra_trees",
-        "feature_config": "lag10_win5_10_20_30",
-        "cv_metrics": {
-          "mean_position_hits": 0.505556,
-          "position_accuracy": 0.101111,
-          "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.351111,
-          "at_least_one_hit_rate": 0.411111
-        },
-        "holdout_metrics": {
-          "mean_position_hits": 0.466667,
-          "position_accuracy": 0.093333,
-          "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.338333,
+          "mean_digit_overlap": 0.33,
           "at_least_one_hit_rate": 0.4
         },
         "holdout_size": 120
@@ -639,18 +632,18 @@
         "model_name": "random_forest",
         "feature_config": "lag10_win5_10_20_30",
         "cv_metrics": {
-          "mean_position_hits": 0.594445,
-          "position_accuracy": 0.118889,
+          "mean_position_hits": 0.544444,
+          "position_accuracy": 0.108889,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.36,
-          "at_least_one_hit_rate": 0.461111
+          "mean_digit_overlap": 0.357778,
+          "at_least_one_hit_rate": 0.416667
         },
         "holdout_metrics": {
-          "mean_position_hits": 0.458333,
-          "position_accuracy": 0.091667,
+          "mean_position_hits": 0.45,
+          "position_accuracy": 0.09,
           "exact_match_rate": 0.0,
-          "mean_digit_overlap": 0.323333,
-          "at_least_one_hit_rate": 0.416667
+          "mean_digit_overlap": 0.34,
+          "at_least_one_hit_rate": 0.366667
         },
         "holdout_size": 120
       }
@@ -660,225 +653,225 @@
       "position_accuracy": 0.115,
       "exact_match_rate": 0.0,
       "mean_digit_overlap": 0.345,
-      "at_least_one_hit_rate": 0.483333
+      "at_least_one_hit_rate": 0.475
     },
     "combo_backtest": {
       "sample_count": 120,
       "top1_exact_rate": 0.0,
       "top5_exact_rate": 0.0,
       "top10_exact_rate": 0.0,
-      "top1_mean_digit_overlap": 0.348333,
+      "top1_mean_digit_overlap": 0.345,
       "top1_at_least_one_hit_rate": 0.883333
     },
     "position_probabilities": [
       [
         {
-          "digit": 4,
-          "probability": 0.158565
-        },
-        {
-          "digit": 9,
-          "probability": 0.144821
-        },
-        {
           "digit": 1,
-          "probability": 0.144599
+          "probability": 0.883732
+        },
+        {
+          "digit": 4,
+          "probability": 0.082671
         },
         {
           "digit": 3,
-          "probability": 0.110393
+          "probability": 0.014372
         },
         {
-          "digit": 7,
-          "probability": 0.091918
-        },
-        {
-          "digit": 8,
-          "probability": 0.089474
-        },
-        {
-          "digit": 2,
-          "probability": 0.087166
-        },
-        {
-          "digit": 6,
-          "probability": 0.08605
+          "digit": 9,
+          "probability": 0.011792
         },
         {
           "digit": 5,
-          "probability": 0.044203
+          "probability": 0.004579
+        },
+        {
+          "digit": 6,
+          "probability": 0.001411
+        },
+        {
+          "digit": 8,
+          "probability": 0.001339
+        },
+        {
+          "digit": 7,
+          "probability": 6.8e-05
+        },
+        {
+          "digit": 2,
+          "probability": 3e-05
         },
         {
           "digit": 0,
-          "probability": 0.042811
+          "probability": 6e-06
+        }
+      ],
+      [
+        {
+          "digit": 2,
+          "probability": 0.893042
+        },
+        {
+          "digit": 1,
+          "probability": 0.043723
+        },
+        {
+          "digit": 3,
+          "probability": 0.039259
+        },
+        {
+          "digit": 8,
+          "probability": 0.009269
+        },
+        {
+          "digit": 9,
+          "probability": 0.008839
+        },
+        {
+          "digit": 5,
+          "probability": 0.004161
+        },
+        {
+          "digit": 0,
+          "probability": 0.000645
+        },
+        {
+          "digit": 6,
+          "probability": 0.000553
+        },
+        {
+          "digit": 7,
+          "probability": 0.000455
+        },
+        {
+          "digit": 4,
+          "probability": 5.4e-05
         }
       ],
       [
         {
           "digit": 7,
-          "probability": 0.171448
-        },
-        {
-          "digit": 5,
-          "probability": 0.142894
-        },
-        {
-          "digit": 8,
-          "probability": 0.135145
-        },
-        {
-          "digit": 0,
-          "probability": 0.134529
-        },
-        {
-          "digit": 6,
-          "probability": 0.110037
-        },
-        {
-          "digit": 4,
-          "probability": 0.088883
-        },
-        {
-          "digit": 3,
-          "probability": 0.087477
-        },
-        {
-          "digit": 1,
-          "probability": 0.086259
+          "probability": 0.972362
         },
         {
           "digit": 9,
-          "probability": 0.043329
+          "probability": 0.016552
+        },
+        {
+          "digit": 3,
+          "probability": 0.005075
+        },
+        {
+          "digit": 8,
+          "probability": 0.003408
+        },
+        {
+          "digit": 5,
+          "probability": 0.001409
+        },
+        {
+          "digit": 4,
+          "probability": 0.000689
+        },
+        {
+          "digit": 1,
+          "probability": 0.000423
         },
         {
           "digit": 2,
-          "probability": 0.0
+          "probability": 5.5e-05
+        },
+        {
+          "digit": 0,
+          "probability": 1.8e-05
+        },
+        {
+          "digit": 6,
+          "probability": 8e-06
+        }
+      ],
+      [
+        {
+          "digit": 7,
+          "probability": 0.559134
+        },
+        {
+          "digit": 5,
+          "probability": 0.420414
+        },
+        {
+          "digit": 9,
+          "probability": 0.012022
+        },
+        {
+          "digit": 8,
+          "probability": 0.002752
+        },
+        {
+          "digit": 4,
+          "probability": 0.002025
+        },
+        {
+          "digit": 6,
+          "probability": 0.001731
+        },
+        {
+          "digit": 2,
+          "probability": 0.001729
+        },
+        {
+          "digit": 1,
+          "probability": 0.000189
+        },
+        {
+          "digit": 3,
+          "probability": 3e-06
+        },
+        {
+          "digit": 0,
+          "probability": 1e-06
         }
       ],
       [
         {
           "digit": 1,
-          "probability": 0.285691
-        },
-        {
-          "digit": 0,
-          "probability": 0.212597
-        },
-        {
-          "digit": 5,
-          "probability": 0.173667
+          "probability": 0.712732
         },
         {
           "digit": 3,
-          "probability": 0.098229
-        },
-        {
-          "digit": 2,
-          "probability": 0.089214
-        },
-        {
-          "digit": 9,
-          "probability": 0.048589
-        },
-        {
-          "digit": 7,
-          "probability": 0.04637
-        },
-        {
-          "digit": 6,
-          "probability": 0.045642
-        },
-        {
-          "digit": 4,
-          "probability": 0.0
-        },
-        {
-          "digit": 8,
-          "probability": 0.0
-        }
-      ],
-      [
-        {
-          "digit": 6,
-          "probability": 0.205342
-        },
-        {
-          "digit": 3,
-          "probability": 0.175732
-        },
-        {
-          "digit": 7,
-          "probability": 0.108317
-        },
-        {
-          "digit": 8,
-          "probability": 0.101373
-        },
-        {
-          "digit": 2,
-          "probability": 0.098585
-        },
-        {
-          "digit": 9,
-          "probability": 0.090776
-        },
-        {
-          "digit": 4,
-          "probability": 0.089529
-        },
-        {
-          "digit": 5,
-          "probability": 0.087017
+          "probability": 0.224634
         },
         {
           "digit": 0,
-          "probability": 0.043329
-        },
-        {
-          "digit": 1,
-          "probability": 0.0
-        }
-      ],
-      [
-        {
-          "digit": 3,
-          "probability": 0.20057
-        },
-        {
-          "digit": 4,
-          "probability": 0.174809
-        },
-        {
-          "digit": 9,
-          "probability": 0.134497
-        },
-        {
-          "digit": 0,
-          "probability": 0.131161
-        },
-        {
-          "digit": 1,
-          "probability": 0.12532
+          "probability": 0.018553
         },
         {
           "digit": 7,
-          "probability": 0.093158
+          "probability": 0.018066
         },
         {
-          "digit": 6,
-          "probability": 0.053269
+          "digit": 4,
+          "probability": 0.011936
         },
         {
           "digit": 5,
-          "probability": 0.044407
+          "probability": 0.007775
         },
         {
           "digit": 2,
-          "probability": 0.04281
+          "probability": 0.003783
         },
         {
           "digit": 8,
-          "probability": 0.0
+          "probability": 0.00175
+        },
+        {
+          "digit": 9,
+          "probability": 0.000457
+        },
+        {
+          "digit": 6,
+          "probability": 0.000315
         }
       ]
     ],
@@ -892,14 +885,14 @@
       ],
       "dudan_digits": [
         2,
-        5,
-        8
+        8,
+        5
       ],
       "preferred_sum_tails": [
         8,
         6,
         2,
-        0
+        9
       ],
       "filtered_sum_tails": [
         7,
@@ -908,145 +901,156 @@
     },
     "ranked_combinations": [
       {
-        "number": "97163",
-        "combined_score": 0.191918,
-        "ml_probability": 0.00029215,
-        "frequency_score": 0.126667,
-        "rule_score": 0.67,
-        "explanation": [
-          "包含胆码趋势数字",
-          "和值尾数匹配近期强势区间"
-        ]
-      },
-      {
-        "number": "47163",
-        "combined_score": 0.191654,
-        "ml_probability": 0.00031987,
-        "frequency_score": 0.118333,
-        "rule_score": 0.6,
-        "explanation": [
-          "包含胆码趋势数字"
-        ]
-      },
-      {
-        "number": "17163",
-        "combined_score": 0.190538,
-        "ml_probability": 0.0002917,
-        "frequency_score": 0.12,
-        "rule_score": 0.67,
-        "explanation": [
-          "包含胆码趋势数字",
-          "和值尾数匹配近期强势区间"
-        ]
-      },
-      {
-        "number": "47133",
-        "combined_score": 0.187271,
-        "ml_probability": 0.00027375,
-        "frequency_score": 0.113333,
-        "rule_score": 0.67,
-        "explanation": [
-          "包含胆码趋势数字",
-          "和值尾数匹配近期强势区间"
-        ]
-      },
-      {
-        "number": "47164",
-        "combined_score": 0.185491,
-        "ml_probability": 0.00027879,
-        "frequency_score": 0.101667,
-        "rule_score": 0.67,
-        "explanation": [
-          "包含胆码趋势数字",
-          "和值尾数匹配近期强势区间"
-        ]
-      },
-      {
-        "number": "48163",
-        "combined_score": 0.184872,
-        "ml_probability": 0.00025214,
-        "frequency_score": 0.121667,
-        "rule_score": 0.59,
-        "explanation": [
-          "包含胆码趋势数字",
-          "包含低频独胆数字",
-          "和值尾数匹配近期强势区间"
-        ]
-      },
-      {
-        "number": "97133",
-        "combined_score": 0.184821,
-        "ml_probability": 0.00025002,
-        "frequency_score": 0.121667,
-        "rule_score": 0.6,
-        "explanation": [
-          "包含胆码趋势数字"
-        ]
-      },
-      {
-        "number": "45163",
-        "combined_score": 0.184473,
-        "ml_probability": 0.0002666,
-        "frequency_score": 0.118333,
-        "rule_score": 0.52,
-        "explanation": [
-          "包含胆码趋势数字",
-          "包含低频独胆数字"
-        ]
-      },
-      {
-        "number": "15163",
-        "combined_score": 0.183459,
-        "ml_probability": 0.00024312,
-        "frequency_score": 0.12,
-        "rule_score": 0.59,
-        "explanation": [
-          "包含胆码趋势数字",
-          "包含低频独胆数字",
-          "和值尾数匹配近期强势区间"
-        ]
-      },
-      {
-        "number": "95163",
-        "combined_score": 0.183437,
-        "ml_probability": 0.00024349,
-        "frequency_score": 0.126667,
-        "rule_score": 0.52,
-        "explanation": [
-          "包含胆码趋势数字",
-          "包含低频独胆数字"
-        ]
-      },
-      {
-        "number": "47063",
-        "combined_score": 0.182569,
-        "ml_probability": 0.00023803,
+        "number": "12771",
+        "combined_score": 0.691517,
+        "ml_probability": 0.30581769,
         "frequency_score": 0.116667,
-        "rule_score": 0.61,
+        "rule_score": 0.62,
+        "explanation": [
+          "包含胆码趋势数字",
+          "包含低频独胆数字",
+          "和值尾数匹配近期强势区间",
+          "与最新开奖号形成错位分散"
+        ]
+      },
+      {
+        "number": "12751",
+        "combined_score": 0.651376,
+        "ml_probability": 0.22994495,
+        "frequency_score": 0.096667,
+        "rule_score": 0.59,
+        "explanation": [
+          "包含胆码趋势数字",
+          "包含低频独胆数字",
+          "和值尾数匹配近期强势区间"
+        ]
+      },
+      {
+        "number": "12773",
+        "combined_score": 0.552383,
+        "ml_probability": 0.09638553,
+        "frequency_score": 0.113333,
+        "rule_score": 0.52,
+        "explanation": [
+          "包含胆码趋势数字",
+          "包含低频独胆数字"
+        ]
+      },
+      {
+        "number": "12753",
+        "combined_score": 0.521818,
+        "ml_probability": 0.07247248,
+        "frequency_score": 0.093333,
+        "rule_score": 0.59,
+        "explanation": [
+          "包含胆码趋势数字",
+          "包含低频独胆数字",
+          "和值尾数匹配近期强势区间"
+        ]
+      },
+      {
+        "number": "42771",
+        "combined_score": 0.43858,
+        "ml_probability": 0.02860851,
+        "frequency_score": 0.106667,
+        "rule_score": 0.55,
+        "explanation": [
+          "包含胆码趋势数字",
+          "包含低频独胆数字",
+          "与最新开奖号形成错位分散"
+        ]
+      },
+      {
+        "number": "42751",
+        "combined_score": 0.413705,
+        "ml_probability": 0.0215108,
+        "frequency_score": 0.086667,
+        "rule_score": 0.59,
+        "explanation": [
+          "包含胆码趋势数字",
+          "包含低频独胆数字",
+          "和值尾数匹配近期强势区间"
+        ]
+      },
+      {
+        "number": "11771",
+        "combined_score": 0.39146,
+        "ml_probability": 0.01497272,
+        "frequency_score": 0.126667,
+        "rule_score": 0.56,
+        "explanation": [
+          "包含胆码趋势数字",
+          "和值尾数落入近期弱势区间",
+          "与最新开奖号形成错位分散"
+        ]
+      },
+      {
+        "number": "13771",
+        "combined_score": 0.384668,
+        "ml_probability": 0.01344404,
+        "frequency_score": 0.113333,
+        "rule_score": 0.7,
         "explanation": [
           "包含胆码趋势数字",
           "和值尾数匹配近期强势区间",
-          "与最新开奖号位置重复过多"
+          "与最新开奖号形成错位分散"
         ]
       },
       {
-        "number": "17133",
-        "combined_score": 0.182042,
-        "ml_probability": 0.00024964,
-        "frequency_score": 0.115,
-        "rule_score": 0.53,
+        "number": "11751",
+        "combined_score": 0.366363,
+        "ml_probability": 0.01125802,
+        "frequency_score": 0.106667,
+        "rule_score": 0.45,
         "explanation": [
           "包含胆码趋势数字",
+          "包含低频独胆数字",
           "和值尾数落入近期弱势区间"
+        ]
+      },
+      {
+        "number": "13751",
+        "combined_score": 0.3572,
+        "ml_probability": 0.0101086,
+        "frequency_score": 0.093333,
+        "rule_score": 0.45,
+        "explanation": [
+          "包含胆码趋势数字",
+          "包含低频独胆数字",
+          "和值尾数落入近期弱势区间"
+        ]
+      },
+      {
+        "number": "42773",
+        "combined_score": 0.352425,
+        "ml_probability": 0.00901663,
+        "frequency_score": 0.103333,
+        "rule_score": 0.52,
+        "explanation": [
+          "包含胆码趋势数字",
+          "包含低频独胆数字"
+        ]
+      },
+      {
+        "number": "12770",
+        "combined_score": 0.345899,
+        "ml_probability": 0.00796069,
+        "frequency_score": 0.12,
+        "rule_score": 0.48,
+        "explanation": [
+          "包含胆码趋势数字",
+          "包含低频独胆数字",
+          "和值尾数落入近期弱势区间",
+          "与最新开奖号形成错位分散"
         ]
       }
     ],
     "combination_profile": {
-      "name": "ml78_freq20_rule02_w120",
-      "ml_weight": 0.78,
-      "frequency_weight": 0.2,
+      "name": "ml84_freq14_rule02_w60",
+      "ml_weight": 0.84,
+      "frequency_weight": 0.14,
       "rule_weight": 0.02,
-      "frequency_window": 120
+      "frequency_window": 60
     }
   }
 }
