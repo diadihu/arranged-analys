@@ -199,29 +199,36 @@ def run_benchmark_selection(
     holdout_size = _determine_holdout_size(len(best_dataset.X))
     train_X = best_dataset.X[:-holdout_size]
     train_y = best_dataset.y[:-holdout_size]
-    trained_models = _fit_position_models(
+    replay_models = _fit_position_models(
         model_name=best_model_name,
         X=train_X,
         y=train_y,
-    )
-
-    next_row, _ = build_next_feature_row(records, lottery_type, best_feature_config)
-    position_probabilities = _predict_position_probabilities(
-        trained_models=trained_models,
-        feature_row=next_row.reshape(1, -1),
-        digit_count=digit_count,
     )
     replay_steps = _build_combination_replay_steps(
         records=best_records,
         lottery_type=lottery_type,
         feature_config=best_feature_config,
         dataset=best_dataset,
-        trained_models=trained_models,
+        trained_models=replay_models,
         holdout_size=holdout_size,
     )
     combination_profile, combo_backtest = _select_combination_profile(
         lottery_type=lottery_type,
         replay_steps=replay_steps,
+    )
+
+    # Holdout models are retained for honest replay. The production prediction is
+    # refit on every available sample after model selection so recent draws count.
+    final_models = _fit_position_models(
+        model_name=best_model_name,
+        X=best_dataset.X,
+        y=best_dataset.y,
+    )
+    next_row, _ = build_next_feature_row(records, lottery_type, best_feature_config)
+    position_probabilities = _predict_position_probabilities(
+        trained_models=final_models,
+        feature_row=next_row.reshape(1, -1),
+        digit_count=digit_count,
     )
     rule_profile = build_rule_profile(records, digit_count=digit_count)
     ranked_combinations = rank_combinations(

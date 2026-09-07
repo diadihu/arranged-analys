@@ -1,20 +1,24 @@
 from __future__ import annotations
 
 import csv
+import json
 import time
 from dataclasses import asdict, dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
 
-from curl_cffi import requests as curl_requests
-
-USER_AGENT = "Mozilla/5.0"
+USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+)
 OFFICIAL_PAGE_BASE = "https://m.lottery.gov.cn"
 OFFICIAL_API_BASE = "https://webapi.sporttery.cn"
 HISTORY_ENDPOINT = f"{OFFICIAL_API_BASE}/gateway/lottery/getHistoryPageListV1.qry"
-SESSION_CACHE: dict[str, Any] = {}
 HISTORY_PAGE_SIZE = 30
+INCREMENTAL_MAX_PAGES = 20
 
 LOTTERY_CONFIG = {
     "p3": {
@@ -67,55 +71,56 @@ def fetch_history(
         raise ValueError(f"Unsupported lottery_type: {lottery_type}")
 
     config = LOTTERY_CONFIG[lottery_type]
-    first_page = _fetch_json(
-        HISTORY_ENDPOINT,
-        params={
-            "gameNo": config["game_no"],
-            "provinceId": 0,
-            "pageSize": HISTORY_PAGE_SIZE,
-            "isVerify": 1,
-            "pageNo": 1,
-        },
-        referer=config["landing_page"],
-    )
-    records = parse_history_payload(first_page, lottery_type)
-    if existing_records is not None:
-        merged = {
-            record.issue: record
-            for record in existing_records
-            if record.lottery_type == lottery_type
-        }
-        for record in records:
-            merged[record.issue] = record
-        return sorted(merged.values(), key=lambda item: (item.draw_date, item.issue))
+    existing = {
+        record.issue: record
+        for record in (existing_records or [])
+        if record.lottery_type == lottery_type
+    }
+    fetched: dict[str, DrawRecord] = {}
+    found_overlap = False
+    page_no = 1
+    total_pages = 1
+    page_limit = max_pages
+    if page_limit is None and existing:
+        page_limit = INCREMENTAL_MAX_PAGES
 
-    total_pages = int(first_page["value"]["pages"])
-    if max_pages is not None:
-        total_pages = min(total_pages, max_pages)
+    while page_no <= total_pages and (page_limit is None or page_no <= page_limit):
+        page_payload = _fetch_json(
+            HISTORY_ENDPOINT,
+            params={
+                "gameNo": config["game_no"],
+                "provinceId": 0,
+                "pageSize": HISTORY_PAGE_SIZE,
+                "isVerify": 1,
+                "pageNo": page_no,
+            },
+            referer=str(config["landing_page"]),
+        )
+        page_records = parse_history_payload(page_payload, lottery_type)
+        if not page_records:
+            raise ValueError(f"Official API returned no {lottery_type} records on page {page_no}")
 
-    seen_issues = {record.issue for record in records}
-    for page_no in range(2, total_pages + 1):
-        try:
-            page_payload = _fetch_json(
-                HISTORY_ENDPOINT,
-                params={
-                    "gameNo": config["game_no"],
-                    "provinceId": 0,
-                    "pageSize": HISTORY_PAGE_SIZE,
-                    "isVerify": 1,
-                    "pageNo": page_no,
-                },
-                referer=config["landing_page"],
-            )
-        except Exception:
+        value = page_payload.get("value") or {}
+        total_pages = max(1, int(value.get("pages") or 1))
+        if any(record.issue in existing for record in page_records):
+            found_overlap = True
+        for record in page_records:
+            fetched[record.issue] = record
+
+        if existing and found_overlap:
             break
-        for record in parse_history_payload(page_payload, lottery_type):
-            if record.issue in seen_issues:
-                continue
-            seen_issues.add(record.issue)
-            records.append(record)
+        page_no += 1
 
-    return sorted(records, key=lambda item: (item.draw_date, item.issue))
+    if existing and not found_overlap:
+        raise RuntimeError(
+            f"Could not reconnect {lottery_type} history to the local dataset within "
+            f"{page_limit or total_pages} pages; refusing to create a history gap"
+        )
+
+    merged = {**existing, **fetched}
+    if not merged:
+        raise ValueError(f"No records available for {lottery_type}")
+    return sorted(merged.values(), key=lambda item: (item.draw_date, item.issue))
 
 
 def parse_history_payload(payload: dict[str, Any], lottery_type: str) -> list[DrawRecord]:
@@ -192,7 +197,7 @@ def read_history_csv(file_path: str | Path) -> list[DrawRecord]:
 
 
 def updated_at_iso() -> str:
-    return datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
 
 def _fetch_json(url: str, params: dict[str, Any], referer: str) -> dict[str, Any]:
@@ -204,15 +209,11 @@ def _fetch_json(url: str, params: dict[str, Any], referer: str) -> dict[str, Any
     }
     for attempt in range(1, 5):
         try:
-            session = _get_or_create_session(referer, refresh=attempt > 1)
-            response = session.get(
-                url,
-                params=params,
-                headers=headers,
-                timeout=30,
-            )
-            response.raise_for_status()
-            return response.json()
+            request_url = f"{url}?{urlencode(params)}"
+            request = Request(request_url, headers=headers)
+            with urlopen(request, timeout=30) as response:
+                charset = response.headers.get_content_charset() or "utf-8"
+                return json.loads(response.read().decode(charset))
         except Exception as error:
             last_error = error
             if attempt == 4:
@@ -220,11 +221,3 @@ def _fetch_json(url: str, params: dict[str, Any], referer: str) -> dict[str, Any
             time.sleep(attempt * 0.8)
     assert last_error is not None
     raise last_error
-
-
-def _get_or_create_session(referer: str, refresh: bool = False) -> Any:
-    if refresh or referer not in SESSION_CACHE:
-        session = curl_requests.Session(impersonate="chrome124")
-        session.get(referer, headers={"User-Agent": USER_AGENT}, timeout=30)
-        SESSION_CACHE[referer] = session
-    return SESSION_CACHE[referer]

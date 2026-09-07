@@ -12,7 +12,7 @@ const state = {
 };
 
 async function loadJson(path) {
-  const response = await fetch(path);
+  const response = await fetch(path, { cache: "no-store" });
   if (!response.ok) {
     throw new Error(`Failed to load ${path}`);
   }
@@ -66,7 +66,7 @@ function renderSummary() {
   document.getElementById("baseline-prediction").textContent = prediction.baseline_prediction;
   document.getElementById("best-combo-number").textContent = prediction.best_combo.number;
   document.getElementById("best-combo-score").textContent =
-    `综合得分 ${prediction.best_combo.combined_score.toFixed(6)} / 权重 ${prediction.combination_profile.name}`;
+    `基于第 ${prediction.latest_issue} 期后 / 综合得分 ${prediction.best_combo.combined_score.toFixed(6)} / 权重 ${prediction.combination_profile.name}`;
   document.getElementById("best-model-name").textContent = prediction.best_model_name;
   document.getElementById("best-model-config").textContent = prediction.best_feature_config;
   document.getElementById("holdout-chip").textContent = `留后回测窗口 ${prediction.holdout_size} 期`;

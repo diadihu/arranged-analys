@@ -95,11 +95,16 @@ python -m http.server 8000 --directory .\docs
 
 - `.github/workflows/update-data.yml`
   - 支持手动触发
-  - 每天定时抓取最新开奖数据
+  - 每天北京时间 21:47、23:17 和次日 06:17 做补偿式检查
+  - 从中国体彩网官方接口逐页追赶，直到与本地历史期号重叠，避免长时间停更后漏期
+  - 官方接口失败时任务直接失败，不再把旧缓存误报成“更新成功”
+  - 没有新开奖时跳过模型训练和 Git 提交
   - 自动运行 `python scripts/build_site.py`
   - 自动提交 `data/raw`、`data/processed`、`docs/data`
 
 因为 Vercel 监听的是 GitHub 仓库，所以这条工作流只要成功把最新数据推回 `main`，Vercel 就会跟着自动部署。
+
+Vercel 在这里负责静态发布，不负责运行 Python 抓取任务。定时抓取由 GitHub Actions 执行，这样无需给静态站点增加可写存储或仓库访问令牌。
 
 ## 当前推荐框架
 

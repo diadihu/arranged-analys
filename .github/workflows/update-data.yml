@@ -2,8 +2,22 @@ name: Sync Lottery Data
 
 on:
   workflow_dispatch:
+    inputs:
+      force_rebuild:
+        description: "Rebuild predictions even when no new draw is available"
+        required: false
+        default: false
+        type: boolean
   schedule:
-    - cron: "30 14 * * *"
+    # UTC: 21:47, 23:17 and next-day 06:17 in Asia/Shanghai.
+    # Multiple off-peak checks absorb GitHub scheduler and source publication delays.
+    - cron: "47 13 * * *"
+    - cron: "17 15 * * *"
+    - cron: "17 22 * * *"
+
+concurrency:
+  group: sync-lottery-data
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -30,7 +44,13 @@ jobs:
           pip install .
 
       - name: Build latest history and site data
-        run: python scripts/build_site.py
+        shell: bash
+        run: |
+          if [[ "${{ inputs.force_rebuild }}" == "true" ]]; then
+            python scripts/build_site.py --force-rebuild
+          else
+            python scripts/build_site.py
+          fi
 
       - name: Commit updated data
         run: |

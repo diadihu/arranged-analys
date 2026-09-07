@@ -1,31 +1,41 @@
 {
-  "updated_at": "2026-09-06T17:11:21Z",
+  "updated_at": "2026-09-07T01:42:53Z",
   "data_source": {
     "name": "中国体彩网官方高速 JSON 接口",
     "history_api": "https://webapi.sporttery.cn/gateway/lottery/getHistoryPageListV1.qry",
-    "latest_api": "https://webapi.sporttery.cn/gateway/lottery/getDigitalDrawInfoV1.qry",
+    "latest_api": "https://webapi.sporttery.cn/gateway/lottery/getHistoryPageListV1.qry",
+    "latest_field": "value.lastPoolDraw / value.list[0]",
     "official_page": "https://m.lottery.gov.cn/mkjpls/"
+  },
+  "pipeline": {
+    "status": "fresh",
+    "generated_at": "2026-09-07T01:42:53Z",
+    "trigger": "forced_rebuild"
   },
   "lotteries": {
     "p3": {
       "display_name": "排列三",
-      "records_count": 7641,
-      "latest_issue": "26174",
-      "latest_draw_date": "2026-07-03",
-      "latest_number": "157",
-      "best_model_name": "extra_trees",
+      "records_count": 7706,
+      "latest_issue": "26239",
+      "latest_draw_date": "2026-09-06",
+      "latest_number": "470",
+      "best_model_name": "logreg",
       "best_feature_config": "lag10_win5_10_20_30",
-      "best_combo": "646"
+      "best_combo": "084",
+      "strategy_after_issue": "26239",
+      "new_records": 0
     },
     "p5": {
       "display_name": "排列五",
-      "records_count": 7641,
-      "latest_issue": "26174",
-      "latest_draw_date": "2026-07-03",
-      "latest_number": "15766",
-      "best_model_name": "extra_trees",
+      "records_count": 7706,
+      "latest_issue": "26239",
+      "latest_draw_date": "2026-09-06",
+      "latest_number": "47061",
+      "best_model_name": "knn",
       "best_feature_config": "lag10_win5_10_20_30",
-      "best_combo": "21353"
+      "best_combo": "97163",
+      "strategy_after_issue": "26239",
+      "new_records": 0
     }
   }
 }

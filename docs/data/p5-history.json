@@ -1,6 +1,6 @@
 {
   "lottery_type": "p5",
-  "updated_at": "2026-09-06T17:11:21Z",
+  "updated_at": "2026-09-07T01:42:53Z",
   "records": [
     {
       "lottery_type": "p5",
@@ -114616,6 +114616,981 @@
       ],
       "number": "15766",
       "detail_url": "https://pdf.sporttery.cn/28300/26174/26174.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26175",
+      "draw_date": "2026-07-04",
+      "digits": [
+        8,
+        3,
+        8,
+        1,
+        3
+      ],
+      "number": "83813",
+      "detail_url": "https://pdf.sporttery.cn/28300/26175/26175.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26176",
+      "draw_date": "2026-07-05",
+      "digits": [
+        5,
+        8,
+        4,
+        8,
+        1
+      ],
+      "number": "58481",
+      "detail_url": "https://pdf.sporttery.cn/28300/26176/26176.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26177",
+      "draw_date": "2026-07-06",
+      "digits": [
+        8,
+        2,
+        6,
+        7,
+        0
+      ],
+      "number": "82670",
+      "detail_url": "https://pdf.sporttery.cn/28300/26177/26177.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26178",
+      "draw_date": "2026-07-07",
+      "digits": [
+        8,
+        3,
+        7,
+        9,
+        9
+      ],
+      "number": "83799",
+      "detail_url": "https://pdf.sporttery.cn/28300/26178/26178.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26179",
+      "draw_date": "2026-07-08",
+      "digits": [
+        3,
+        9,
+        6,
+        2,
+        3
+      ],
+      "number": "39623",
+      "detail_url": "https://pdf.sporttery.cn/28300/26179/26179.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26180",
+      "draw_date": "2026-07-09",
+      "digits": [
+        0,
+        0,
+        5,
+        7,
+        2
+      ],
+      "number": "00572",
+      "detail_url": "https://pdf.sporttery.cn/28300/26180/26180.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26181",
+      "draw_date": "2026-07-10",
+      "digits": [
+        1,
+        2,
+        4,
+        4,
+        4
+      ],
+      "number": "12444",
+      "detail_url": "https://pdf.sporttery.cn/28300/26181/26181.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26182",
+      "draw_date": "2026-07-11",
+      "digits": [
+        3,
+        1,
+        3,
+        4,
+        0
+      ],
+      "number": "31340",
+      "detail_url": "https://pdf.sporttery.cn/28300/26182/26182.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26183",
+      "draw_date": "2026-07-12",
+      "digits": [
+        3,
+        5,
+        2,
+        6,
+        2
+      ],
+      "number": "35262",
+      "detail_url": "https://pdf.sporttery.cn/28300/26183/26183.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26184",
+      "draw_date": "2026-07-13",
+      "digits": [
+        1,
+        4,
+        2,
+        4,
+        6
+      ],
+      "number": "14246",
+      "detail_url": "https://pdf.sporttery.cn/28300/26184/26184.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26185",
+      "draw_date": "2026-07-14",
+      "digits": [
+        7,
+        8,
+        5,
+        7,
+        9
+      ],
+      "number": "78579",
+      "detail_url": "https://pdf.sporttery.cn/28300/26185/26185.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26186",
+      "draw_date": "2026-07-15",
+      "digits": [
+        6,
+        6,
+        5,
+        0,
+        1
+      ],
+      "number": "66501",
+      "detail_url": "https://pdf.sporttery.cn/28300/26186/26186.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26187",
+      "draw_date": "2026-07-16",
+      "digits": [
+        0,
+        8,
+        6,
+        7,
+        8
+      ],
+      "number": "08678",
+      "detail_url": "https://pdf.sporttery.cn/28300/26187/26187.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26188",
+      "draw_date": "2026-07-17",
+      "digits": [
+        6,
+        0,
+        7,
+        7,
+        0
+      ],
+      "number": "60770",
+      "detail_url": "https://pdf.sporttery.cn/28300/26188/26188.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26189",
+      "draw_date": "2026-07-18",
+      "digits": [
+        9,
+        5,
+        0,
+        6,
+        5
+      ],
+      "number": "95065",
+      "detail_url": "https://pdf.sporttery.cn/28300/26189/26189.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26190",
+      "draw_date": "2026-07-19",
+      "digits": [
+        5,
+        5,
+        4,
+        0,
+        8
+      ],
+      "number": "55408",
+      "detail_url": "https://pdf.sporttery.cn/28300/26190/26190.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26191",
+      "draw_date": "2026-07-20",
+      "digits": [
+        0,
+        6,
+        9,
+        8,
+        9
+      ],
+      "number": "06989",
+      "detail_url": "https://pdf.sporttery.cn/28300/26191/26191.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26192",
+      "draw_date": "2026-07-21",
+      "digits": [
+        3,
+        0,
+        6,
+        1,
+        4
+      ],
+      "number": "30614",
+      "detail_url": "https://pdf.sporttery.cn/28300/26192/26192.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26193",
+      "draw_date": "2026-07-22",
+      "digits": [
+        1,
+        8,
+        0,
+        6,
+        8
+      ],
+      "number": "18068",
+      "detail_url": "https://pdf.sporttery.cn/28300/26193/26193.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26194",
+      "draw_date": "2026-07-23",
+      "digits": [
+        7,
+        0,
+        1,
+        0,
+        6
+      ],
+      "number": "70106",
+      "detail_url": "https://pdf.sporttery.cn/28300/26194/26194.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26195",
+      "draw_date": "2026-07-24",
+      "digits": [
+        5,
+        9,
+        5,
+        1,
+        6
+      ],
+      "number": "59516",
+      "detail_url": "https://pdf.sporttery.cn/28300/26195/26195.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26196",
+      "draw_date": "2026-07-25",
+      "digits": [
+        7,
+        2,
+        6,
+        3,
+        2
+      ],
+      "number": "72632",
+      "detail_url": "https://pdf.sporttery.cn/28300/26196/26196.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26197",
+      "draw_date": "2026-07-26",
+      "digits": [
+        4,
+        7,
+        3,
+        4,
+        1
+      ],
+      "number": "47341",
+      "detail_url": "https://pdf.sporttery.cn/28300/26197/26197.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26198",
+      "draw_date": "2026-07-27",
+      "digits": [
+        7,
+        1,
+        9,
+        0,
+        7
+      ],
+      "number": "71907",
+      "detail_url": "https://pdf.sporttery.cn/28300/26198/26198.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26199",
+      "draw_date": "2026-07-28",
+      "digits": [
+        3,
+        0,
+        5,
+        0,
+        7
+      ],
+      "number": "30507",
+      "detail_url": "https://pdf.sporttery.cn/28300/26199/26199.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26200",
+      "draw_date": "2026-07-29",
+      "digits": [
+        0,
+        7,
+        7,
+        2,
+        0
+      ],
+      "number": "07720",
+      "detail_url": "https://pdf.sporttery.cn/28300/26200/26200.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26201",
+      "draw_date": "2026-07-30",
+      "digits": [
+        8,
+        6,
+        2,
+        7,
+        1
+      ],
+      "number": "86271",
+      "detail_url": "https://pdf.sporttery.cn/28300/26201/26201.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26202",
+      "draw_date": "2026-07-31",
+      "digits": [
+        9,
+        6,
+        1,
+        7,
+        0
+      ],
+      "number": "96170",
+      "detail_url": "https://pdf.sporttery.cn/28300/26202/26202.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26203",
+      "draw_date": "2026-08-01",
+      "digits": [
+        1,
+        3,
+        5,
+        6,
+        8
+      ],
+      "number": "13568",
+      "detail_url": "https://pdf.sporttery.cn/28300/26203/26203.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26204",
+      "draw_date": "2026-08-02",
+      "digits": [
+        6,
+        7,
+        4,
+        0,
+        7
+      ],
+      "number": "67407",
+      "detail_url": "https://pdf.sporttery.cn/28300/26204/26204.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26205",
+      "draw_date": "2026-08-03",
+      "digits": [
+        8,
+        0,
+        6,
+        0,
+        8
+      ],
+      "number": "80608",
+      "detail_url": "https://pdf.sporttery.cn/28300/26205/26205.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26206",
+      "draw_date": "2026-08-04",
+      "digits": [
+        7,
+        0,
+        9,
+        6,
+        5
+      ],
+      "number": "70965",
+      "detail_url": "https://pdf.sporttery.cn/28300/26206/26206.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26207",
+      "draw_date": "2026-08-05",
+      "digits": [
+        8,
+        6,
+        6,
+        4,
+        4
+      ],
+      "number": "86644",
+      "detail_url": "https://pdf.sporttery.cn/28300/26207/26207.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26208",
+      "draw_date": "2026-08-06",
+      "digits": [
+        4,
+        7,
+        1,
+        8,
+        6
+      ],
+      "number": "47186",
+      "detail_url": "https://pdf.sporttery.cn/28300/26208/26208.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26209",
+      "draw_date": "2026-08-07",
+      "digits": [
+        9,
+        8,
+        2,
+        7,
+        7
+      ],
+      "number": "98277",
+      "detail_url": "https://pdf.sporttery.cn/28300/26209/26209.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26210",
+      "draw_date": "2026-08-08",
+      "digits": [
+        0,
+        9,
+        4,
+        5,
+        1
+      ],
+      "number": "09451",
+      "detail_url": "https://pdf.sporttery.cn/28300/26210/26210.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26211",
+      "draw_date": "2026-08-09",
+      "digits": [
+        5,
+        1,
+        5,
+        4,
+        3
+      ],
+      "number": "51543",
+      "detail_url": "https://pdf.sporttery.cn/28300/26211/26211.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26212",
+      "draw_date": "2026-08-10",
+      "digits": [
+        8,
+        3,
+        9,
+        4,
+        3
+      ],
+      "number": "83943",
+      "detail_url": "https://pdf.sporttery.cn/28300/26212/26212.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26213",
+      "draw_date": "2026-08-11",
+      "digits": [
+        7,
+        4,
+        0,
+        7,
+        1
+      ],
+      "number": "74071",
+      "detail_url": "https://pdf.sporttery.cn/28300/26213/26213.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26214",
+      "draw_date": "2026-08-12",
+      "digits": [
+        0,
+        1,
+        4,
+        9,
+        0
+      ],
+      "number": "01490",
+      "detail_url": "https://pdf.sporttery.cn/28300/26214/26214.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26215",
+      "draw_date": "2026-08-13",
+      "digits": [
+        9,
+        2,
+        7,
+        3,
+        8
+      ],
+      "number": "92738",
+      "detail_url": "https://pdf.sporttery.cn/28300/26215/26215.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26216",
+      "draw_date": "2026-08-14",
+      "digits": [
+        9,
+        5,
+        3,
+        0,
+        0
+      ],
+      "number": "95300",
+      "detail_url": "https://pdf.sporttery.cn/28300/26216/26216.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26217",
+      "draw_date": "2026-08-15",
+      "digits": [
+        0,
+        1,
+        9,
+        6,
+        6
+      ],
+      "number": "01966",
+      "detail_url": "https://pdf.sporttery.cn/28300/26217/26217.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26218",
+      "draw_date": "2026-08-16",
+      "digits": [
+        0,
+        7,
+        9,
+        5,
+        0
+      ],
+      "number": "07950",
+      "detail_url": "https://pdf.sporttery.cn/28300/26218/26218.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26219",
+      "draw_date": "2026-08-17",
+      "digits": [
+        6,
+        6,
+        2,
+        1,
+        9
+      ],
+      "number": "66219",
+      "detail_url": "https://pdf.sporttery.cn/28300/26219/26219.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26220",
+      "draw_date": "2026-08-18",
+      "digits": [
+        4,
+        8,
+        2,
+        9,
+        9
+      ],
+      "number": "48299",
+      "detail_url": "https://pdf.sporttery.cn/28300/26220/26220.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26221",
+      "draw_date": "2026-08-19",
+      "digits": [
+        9,
+        6,
+        9,
+        8,
+        8
+      ],
+      "number": "96988",
+      "detail_url": "https://pdf.sporttery.cn/28300/26221/26221.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26222",
+      "draw_date": "2026-08-20",
+      "digits": [
+        8,
+        7,
+        7,
+        7,
+        1
+      ],
+      "number": "87771",
+      "detail_url": "https://pdf.sporttery.cn/28300/26222/26222.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26223",
+      "draw_date": "2026-08-21",
+      "digits": [
+        2,
+        2,
+        3,
+        7,
+        3
+      ],
+      "number": "22373",
+      "detail_url": "https://pdf.sporttery.cn/28300/26223/26223.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26224",
+      "draw_date": "2026-08-22",
+      "digits": [
+        9,
+        1,
+        2,
+        4,
+        0
+      ],
+      "number": "91240",
+      "detail_url": "https://pdf.sporttery.cn/28300/26224/26224.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26225",
+      "draw_date": "2026-08-23",
+      "digits": [
+        1,
+        1,
+        6,
+        3,
+        5
+      ],
+      "number": "11635",
+      "detail_url": "https://pdf.sporttery.cn/28300/26225/26225.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26226",
+      "draw_date": "2026-08-24",
+      "digits": [
+        2,
+        0,
+        1,
+        6,
+        9
+      ],
+      "number": "20169",
+      "detail_url": "https://pdf.sporttery.cn/28300/26226/26226.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26227",
+      "draw_date": "2026-08-25",
+      "digits": [
+        4,
+        3,
+        1,
+        9,
+        5
+      ],
+      "number": "43195",
+      "detail_url": "https://pdf.sporttery.cn/28300/26227/26227.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26228",
+      "draw_date": "2026-08-26",
+      "digits": [
+        5,
+        6,
+        0,
+        2,
+        5
+      ],
+      "number": "56025",
+      "detail_url": "https://pdf.sporttery.cn/28300/26228/26228.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26229",
+      "draw_date": "2026-08-27",
+      "digits": [
+        2,
+        8,
+        0,
+        5,
+        4
+      ],
+      "number": "28054",
+      "detail_url": "https://pdf.sporttery.cn/28300/26229/26229.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26230",
+      "draw_date": "2026-08-28",
+      "digits": [
+        9,
+        4,
+        6,
+        8,
+        3
+      ],
+      "number": "94683",
+      "detail_url": "https://pdf.sporttery.cn/28300/26230/26230.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26231",
+      "draw_date": "2026-08-29",
+      "digits": [
+        1,
+        8,
+        7,
+        9,
+        9
+      ],
+      "number": "18799",
+      "detail_url": "https://pdf.sporttery.cn/28300/26231/26231.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26232",
+      "draw_date": "2026-08-30",
+      "digits": [
+        8,
+        0,
+        2,
+        3,
+        3
+      ],
+      "number": "80233",
+      "detail_url": "https://pdf.sporttery.cn/28300/26232/26232.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26233",
+      "draw_date": "2026-08-31",
+      "digits": [
+        1,
+        6,
+        3,
+        4,
+        0
+      ],
+      "number": "16340",
+      "detail_url": "https://pdf.sporttery.cn/28300/26233/26233.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26234",
+      "draw_date": "2026-09-01",
+      "digits": [
+        3,
+        0,
+        1,
+        2,
+        9
+      ],
+      "number": "30129",
+      "detail_url": "https://pdf.sporttery.cn/28300/26234/26234.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26235",
+      "draw_date": "2026-09-02",
+      "digits": [
+        7,
+        7,
+        9,
+        6,
+        7
+      ],
+      "number": "77967",
+      "detail_url": "https://pdf.sporttery.cn/28300/26235/26235.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26236",
+      "draw_date": "2026-09-03",
+      "digits": [
+        1,
+        7,
+        3,
+        2,
+        6
+      ],
+      "number": "17326",
+      "detail_url": "https://pdf.sporttery.cn/28300/26236/26236.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26237",
+      "draw_date": "2026-09-04",
+      "digits": [
+        9,
+        5,
+        0,
+        8,
+        1
+      ],
+      "number": "95081",
+      "detail_url": "https://pdf.sporttery.cn/28300/26237/26237.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26238",
+      "draw_date": "2026-09-05",
+      "digits": [
+        3,
+        6,
+        1,
+        7,
+        3
+      ],
+      "number": "36173",
+      "detail_url": "https://pdf.sporttery.cn/28300/26238/26238.pdf"
+    },
+    {
+      "lottery_type": "p5",
+      "display_name": "排列五",
+      "issue": "26239",
+      "draw_date": "2026-09-06",
+      "digits": [
+        4,
+        7,
+        0,
+        6,
+        1
+      ],
+      "number": "47061",
+      "detail_url": "https://pdf.sporttery.cn/28300/26239/26239.pdf"
     }
   ]
 }
