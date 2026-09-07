@@ -1,13 +1,25 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "npm run vercel-build",
-  "outputDirectory": "docs",
   "regions": ["hkg1"],
   "functions": {
     "api/sporttery.js": {
       "maxDuration": 30
     }
   },
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/docs/index.html"
+    },
+    {
+      "source": "/assets/:path*",
+      "destination": "/docs/assets/:path*"
+    },
+    {
+      "source": "/data/:path*",
+      "destination": "/docs/data/:path*"
+    }
+  ],
   "headers": [
     {
       "source": "/data/(.*)",

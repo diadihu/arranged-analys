@@ -1,8 +1,5 @@
 {
   "name": "arranged-analys-site",
   "private": true,
-  "type": "module",
-  "scripts": {
-    "vercel-build": "node scripts/build-vercel.mjs"
-  }
+  "type": "module"
 }
