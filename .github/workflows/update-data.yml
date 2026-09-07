@@ -8,12 +8,10 @@ on:
         required: false
         default: false
         type: boolean
-  schedule:
-    # UTC: 21:47, 23:17 and next-day 06:17 in Asia/Shanghai.
-    # Multiple off-peak checks absorb GitHub scheduler and source publication delays.
-    - cron: "47 13 * * *"
-    - cron: "17 15 * * *"
-    - cron: "17 22 * * *"
+
+# The official API rejects GitHub-hosted and Vercel cloud egress with HTTP 567.
+# Keep this workflow manual for future connectivity diagnostics; local scheduling
+# performs the production sync and pushes generated data to main.
 
 concurrency:
   group: sync-lottery-data
@@ -26,8 +24,6 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    env:
-      SPORTTERY_PROXY_URL: https://arranged-analys-red.vercel.app/api/sporttery
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6

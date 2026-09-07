@@ -83,7 +83,7 @@ python -m http.server 8000 --directory .\docs
 
 当前仓库按静态目录方式部署到 Vercel：
 
-- `outputDirectory`: `docs`
+- Vercel 项目的 Root Directory 为 `docs`
 - 推送到 GitHub 默认分支后，Vercel 会自动重新构建并发布
 - 只要仓库里的 `docs/` 和 `docs/data/` 更新，线上页面就会同步变化
 
@@ -91,22 +91,36 @@ python -m http.server 8000 --directory .\docs
 
 ## 自动数据更新
 
-仓库保留了定时任务：
+中国体彩网官方接口会对 GitHub Hosted Runner 和 Vercel Function 等云出口返回 `HTTP 567`。因此生产更新采用“本机抓取和训练、GitHub 保存结果、Vercel 自动发布”的链路，数据源仍是中国体彩网官方接口。
 
-- `.github/workflows/update-data.yml`
-  - 支持手动触发
-  - 每天北京时间 21:47、23:17 和次日 06:17 做补偿式检查
-  - 从中国体彩网官方接口逐页追赶，直到与本地历史期号重叠，避免长时间停更后漏期
-  - 官方接口失败时任务直接失败，不再把旧缓存误报成“更新成功”
-  - 没有新开奖时跳过模型训练和 Git 提交
-  - 自动运行 `python scripts/build_site.py`
-  - 自动提交 `data/raw`、`data/processed`、`docs/data`
+仓库提供本地同步发布脚本：
 
-因为 Vercel 监听的是 GitHub 仓库，所以这条工作流只要成功把最新数据推回 `main`，Vercel 就会跟着自动部署。
+```powershell
+.\scripts\sync-and-publish.ps1
+```
 
-Vercel 在这里负责静态发布，不负责运行 Python 抓取任务。定时抓取由 GitHub Actions 执行，这样无需给静态站点增加可写存储或仓库访问令牌。
+脚本会：
 
-中国体彩网会拦截 GitHub 公有 Runner 的出口 IP，因此仓库提供受限的 `/api/sporttery` Vercel Function 作为官方接口中继。它只接受 `p3`、`p5` 和合法页码，不支持代理任意网址；最终数据仍由官方接口返回。
+1. 对 `main` 执行 `git pull --ff-only`
+2. 从官方接口增量追赶排列三、排列五历史开奖
+3. 发现新期开奖后重新训练、交叉验证、回测并生成策略
+4. 只暂存 `data/raw`、`data/processed`、`docs/data` 中的已知产物
+5. 自动提交并推送，随后由 Vercel Git 集成发布
+
+没有新期开奖时脚本不会训练、提交或触发无意义部署。可用以下命令只检查本机依赖：
+
+```powershell
+.\scripts\sync-and-publish.ps1 -CheckOnly
+```
+
+云端工作流 `.github/workflows/update-data.yml` 保留为手动网络诊断，不再定时运行，避免每天产生已知的 `HTTP 567` 失败记录。实际定时任务在北京时间 21:47、23:17 和次日 06:17 从本机执行上述脚本，以吸收开奖发布时间和网络波动。
+
+同步逻辑具备以下保护：
+
+- 逐页追赶直到与本地历史期号重叠，避免停更后漏期
+- 官方接口失败时直接失败，不把旧缓存误报为更新成功
+- 互斥锁阻止多个计划任务并发运行
+- 策略明确记录其所依据的最后一期，避免把旧策略当成最新预测
 
 ## 当前推荐框架
 
