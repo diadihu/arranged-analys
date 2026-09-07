@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-07T13:48:44Z",
+  "updated_at": "2026-09-07T15:49:05Z",
   "data_source": {
     "name": "中国体彩网官方高速 JSON 接口",
     "history_api": "https://webapi.sporttery.cn/gateway/lottery/getHistoryPageListV1.qry",
@@ -9,7 +9,7 @@
   },
   "pipeline": {
     "status": "fresh",
-    "generated_at": "2026-09-07T13:48:44Z",
+    "generated_at": "2026-09-07T15:49:05Z",
     "trigger": "history_change"
   },
   "lotteries": {
@@ -23,7 +23,7 @@
       "best_feature_config": "lag6_win5_10_20",
       "best_combo": "579",
       "strategy_after_issue": "26240",
-      "new_records": 1
+      "new_records": 0
     },
     "p5": {
       "display_name": "排列五",
@@ -35,7 +35,7 @@
       "best_feature_config": "lag6_win5_10_20",
       "best_combo": "12771",
       "strategy_after_issue": "26240",
-      "new_records": 1
+      "new_records": 0
     }
   }
 }
