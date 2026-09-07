@@ -3,6 +3,12 @@
   "installCommand": "",
   "buildCommand": "",
   "outputDirectory": "docs",
+  "regions": ["hkg1"],
+  "functions": {
+    "api/sporttery.js": {
+      "maxDuration": 30
+    }
+  },
   "headers": [
     {
       "source": "/data/(.*)",

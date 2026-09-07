@@ -106,6 +106,8 @@ python -m http.server 8000 --directory .\docs
 
 Vercel 在这里负责静态发布，不负责运行 Python 抓取任务。定时抓取由 GitHub Actions 执行，这样无需给静态站点增加可写存储或仓库访问令牌。
 
+中国体彩网会拦截 GitHub 公有 Runner 的出口 IP，因此仓库提供受限的 `/api/sporttery` Vercel Function 作为官方接口中继。它只接受 `p3`、`p5` 和合法页码，不支持代理任意网址；最终数据仍由官方接口返回。
+
 ## 当前推荐框架
 
 当前不是“预测中奖”的强模型，而是一套可解释的数据实验流程：

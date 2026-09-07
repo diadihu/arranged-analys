@@ -98,3 +98,43 @@ def test_fetch_history_rejects_unconnected_increment(monkeypatch: pytest.MonkeyP
 
     with pytest.raises(RuntimeError, match="refusing to create a history gap"):
         fetch_history("p3", max_pages=2, existing_records=existing)
+
+
+def test_fetch_json_uses_configured_proxy(monkeypatch: pytest.MonkeyPatch) -> None:
+    requested_urls: list[str] = []
+
+    class FakeHeaders:
+        @staticmethod
+        def get_content_charset() -> str:
+            return "utf-8"
+
+    class FakeResponse:
+        headers = FakeHeaders()
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc_value, traceback):
+            return False
+
+        @staticmethod
+        def read() -> bytes:
+            return b'{"errorCode":"0","value":{"list":[]}}'
+
+    def fake_urlopen(request, timeout: int):
+        requested_urls.append(request.full_url)
+        return FakeResponse()
+
+    monkeypatch.setenv("SPORTTERY_PROXY_URL", "https://example.vercel.app/api/sporttery")
+    monkeypatch.setattr(sporttery, "urlopen", fake_urlopen)
+
+    payload = sporttery._fetch_json(
+        sporttery.HISTORY_ENDPOINT,
+        params={"gameNo": "35", "pageNo": 7},
+        referer="https://m.lottery.gov.cn/mkjpls/",
+    )
+
+    assert payload["errorCode"] == "0"
+    assert requested_urls == [
+        "https://example.vercel.app/api/sporttery?lotteryType=p3&pageNo=7"
+    ]

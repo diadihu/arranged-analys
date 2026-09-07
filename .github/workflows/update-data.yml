@@ -26,6 +26,8 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      SPORTTERY_PROXY_URL: https://arranged-analys-red.vercel.app/api/sporttery
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import csv
 import json
+import os
 import time
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
@@ -207,10 +208,24 @@ def _fetch_json(url: str, params: dict[str, Any], referer: str) -> dict[str, Any
         "Referer": referer,
         "Accept": "application/json, text/plain, */*",
     }
+    request_url = url
+    request_params = params
+    proxy_url = os.getenv("SPORTTERY_PROXY_URL", "").strip()
+    if proxy_url and url == HISTORY_ENDPOINT:
+        game_to_type = {str(config["game_no"]): lottery_type for lottery_type, config in LOTTERY_CONFIG.items()}
+        lottery_type = game_to_type.get(str(params.get("gameNo")))
+        if not lottery_type:
+            raise ValueError(f"Unsupported gameNo for proxy request: {params.get('gameNo')}")
+        request_url = proxy_url
+        request_params = {
+            "lotteryType": lottery_type,
+            "pageNo": params["pageNo"],
+        }
+
     for attempt in range(1, 5):
         try:
-            request_url = f"{url}?{urlencode(params)}"
-            request = Request(request_url, headers=headers)
+            full_url = f"{request_url}?{urlencode(request_params)}"
+            request = Request(full_url, headers=headers)
             with urlopen(request, timeout=30) as response:
                 charset = response.headers.get_content_charset() or "utf-8"
                 return json.loads(response.read().decode(charset))
